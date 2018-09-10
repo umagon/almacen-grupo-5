@@ -15,3 +15,42 @@ Se complementa consumiendo servicios de el beAlmacen.
 
 Aplicación BackEnd destinada a alimentar a los distintos clientes con datos del negocio.
 Ofrece interfaces para almacenApp, LOGISTICA y TIENDA.
+
+
+## Models
+
+### Usuario
+- userName
+- password
+- perfil
+- estado
+
+### Productos
+- id
+- nombre
+- descripcion
+- stock
+- stockLimite
+- estado
+- proveedor
+	- nombre
+	- email
+
+### Compras
+- id
+- producto
+	- nombre
+	- descripcion
+- cantidad
+- precio
+- fechaCompra
+- fechaEntrega
+
+### Pedidos
+- id
+- producto
+	- nombre
+	- descripcion
+- cantidad
+- fechaCompra
+- fechaEntrega
