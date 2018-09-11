@@ -4,6 +4,13 @@ var Schema = mongoose.Schema;
 
 
 var UsuarioSchema = new Schema({
+  userName: { type: String, required: 'Debe ingresar el usuario' },
+  password: { type: String, required: 'Debe ingresar una contraseña' },
+  perfil: { type: String },
+  estado: { type: [
+    { type: String, enum: ['pending', 'ongoing', 'completed'] }
+  ]}
+/* 
   name: {
     type: String,
     required: 'Kindly enter the name of the Usuario'
@@ -19,6 +26,7 @@ var UsuarioSchema = new Schema({
     }],
     default: ['pending']
   }
+   */
 });
 
 module.exports = mongoose.model('Usuarios', UsuarioSchema);

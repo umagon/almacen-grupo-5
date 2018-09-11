@@ -26,7 +26,6 @@ Ofrece interfaces para almacenApp, LOGISTICA y TIENDA.
 - estado
 
 ### Productos
-- id
 - nombre
 - descripcion
 - stock
@@ -37,7 +36,6 @@ Ofrece interfaces para almacenApp, LOGISTICA y TIENDA.
 	- email
 
 ### Compras
-- id
 - producto
 	- nombre
 	- descripcion
@@ -47,7 +45,6 @@ Ofrece interfaces para almacenApp, LOGISTICA y TIENDA.
 - fechaEntrega
 
 ### Pedidos
-- id
 - producto
 	- nombre
 	- descripcion
