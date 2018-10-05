@@ -23,14 +23,14 @@ Ofrece interfaces para almacenApp, LOGISTICA y TIENDA.
 - userName
 - password
 - perfil
-- estado
+- isBorrado
 
 ### Productos
 - nombre
 - descripcion
 - stock
 - stockLimite
-- estado
+- isBorrado
 - proveedor
 	- nombre
 	- email
