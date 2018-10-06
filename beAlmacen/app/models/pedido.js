@@ -5,9 +5,9 @@ var Schema = mongoose.Schema;
 
 
 var PedidoSchema = new Schema({
-	producto: { type: {
-		nombre: String,
-		descripcion: String,
+	compra: { type: {
+		cantidad: Number,
+		descripcion: Precio,
 	},
 	cantidad: { type: Number, default: 1 },
 	fechaCompra: { type: Date, default: Date.now },
