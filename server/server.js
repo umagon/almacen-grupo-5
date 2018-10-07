@@ -1,4 +1,5 @@
 require('rootpath')();
+var request = require('request');
 var config = require('config.json');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -32,7 +33,7 @@ app.use(
       }
       return null;
     }
-  }).unless({ path: ['/users/authenticate', '/users/register'] })
+  }).unless({ path: ['/users/authenticate', '/users/register', '/users'] })
 );
 
 app.use(function(err, req, res, next) {
@@ -47,3 +48,5 @@ app.use(function(err, req, res, next) {
 var server = app.listen(config.serverPort, function() {
   console.log('Server listening on port ' + config.serverPort);
 });
+
+module.exports = server;

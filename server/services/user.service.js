@@ -24,38 +24,31 @@ function authenticate(username, password) {
   Usuario.findOne({ username: username }, function(err, user) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
-    if (user && bcrypt.compareSync(password, user.hash)) {
-      // authentication successful
+    if (user && bcrypt.compareSync(password, user.password)) {
       deferred.resolve({
         _id: user._id,
         username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        perfil: user.perfil,
         token: jwt.sign({ sub: user._id }, config.secret)
       });
     } else {
-      // authentication failed
       deferred.resolve();
     }
   });
-
   return deferred.promise;
 }
 
 function getAll() {
   var deferred = Q.defer();
-  console.log('GET ALL');
-  Usuario.find().toArray(function(err, users) {
+
+  Usuario.find({}, function(err, usuarios) {
     if (err) deferred.reject(err.name + ': ' + err.message);
-
-    // return users (without hashed passwords)
-    users = _.map(users, function(user) {
-      return _.omit(user, 'hash');
+    usuarios = _.map(usuarios, function(user) {
+      user = _.omit(user, 'password');
+      return _.omit(user, 'isBorrado');
     });
-
-    deferred.resolve(users);
+    deferred.resolve(usuarios);
   });
-
   return deferred.promise;
 }
 
@@ -67,7 +60,7 @@ function getById(_id) {
 
     if (user) {
       // return user (without hashed password)
-      deferred.resolve(_.omit(user, 'hash'));
+      deferred.resolve(_.omit(user, 'password'));
     } else {
       // user not found
       deferred.resolve();
