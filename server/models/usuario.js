@@ -11,4 +11,4 @@ var UsuarioSchema = new Schema({
   isBorrado: { type: Boolean }
 });
 
-module.exports = mongoose.model('Usuarios', UsuarioSchema);
+module.exports = mongoose.model('Usuario', UsuarioSchema);

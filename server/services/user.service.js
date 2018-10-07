@@ -3,9 +3,8 @@ var _ = require('lodash');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var Q = require('q');
-
-var mongoose = require('mongoose'),
-  Usuarios = mongoose.model('Usuario');
+var mongoose = require('mongoose');
+var Usuario = require('../models/usuario');
 
 var service = {};
 
@@ -19,9 +18,10 @@ service.delete = _delete;
 module.exports = service;
 
 function authenticate(username, password) {
+  console.log(' autenticacion');
   var deferred = Q.defer();
 
-  Usuarios.findOne({ username: username }, function(err, user) {
+  Usuario.findOne({ username: username }, function(err, user) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
     if (user && bcrypt.compareSync(password, user.hash)) {
@@ -44,8 +44,8 @@ function authenticate(username, password) {
 
 function getAll() {
   var deferred = Q.defer();
-
-  Usuarios.find().toArray(function(err, users) {
+  console.log('GET ALL');
+  Usuario.find().toArray(function(err, users) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
     // return users (without hashed passwords)
@@ -62,7 +62,7 @@ function getAll() {
 function getById(_id) {
   var deferred = Q.defer();
 
-  Usuarios.findById(_id, function(err, user) {
+  Usuario.findById(_id, function(err, user) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
     if (user) {
@@ -80,28 +80,31 @@ function getById(_id) {
 function create(userParam) {
   var deferred = Q.defer();
 
+  console.log(userParam);
   // validation
-  Usuarios.findOne({ username: userParam.username }, function(err, user) {
+  Usuario.findOne({ username: userParam.username }, function(err, user) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
     if (user) {
       // username already exists
       deferred.reject('Username "' + userParam.username + '" is already taken');
     } else {
-      createUser();
+      createUser(userParam);
     }
   });
 
-  function createUser() {
-    // set user object to userParam without the cleartext password
-    var user = _.omit(userParam, 'password');
-
-    // add hashed password to user object
-    user.hash = bcrypt.hashSync(userParam.password, 10);
-
-    Usuarios.insert(user, function(err, doc) {
+  function createUser(user) {
+    user.password = bcrypt.hashSync(userParam.password, 10);
+    console.log('llega?');
+    var asd = new Usuario({
+      username: user.username,
+      password: user.password,
+      perfil: user.perfil,
+      isBorrado: user.isBorrado
+    });
+    console.log(asd);
+    asd.save(function(err, usuario) {
       if (err) deferred.reject(err.name + ': ' + err.message);
-
       deferred.resolve();
     });
   }
@@ -113,12 +116,12 @@ function update(_id, userParam) {
   var deferred = Q.defer();
 
   // validation
-  Usuarios.findById(_id, function(err, user) {
+  Usuario.findById(_id, function(err, user) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
     if (user.username !== userParam.username) {
       // username has changed so check if the new username is already taken
-      Usuarios.findOne({ username: userParam.username }, function(err, user) {
+      Usuario.findOne({ username: userParam.username }, function(err, user) {
         if (err) deferred.reject(err.name + ': ' + err.message);
 
         if (user) {
@@ -148,7 +151,7 @@ function update(_id, userParam) {
       set.hash = bcrypt.hashSync(userParam.password, 10);
     }
 
-    Usuarios.update(
+    Usuario.update(
       { _id: mongo.helper.toObjectID(_id) },
       { $set: set },
       function(err, doc) {
@@ -165,7 +168,7 @@ function update(_id, userParam) {
 function _delete(_id) {
   var deferred = Q.defer();
 
-  Usuarios.remove({ _id: mongo.helper.toObjectID(_id) }, function(err) {
+  Usuario.remove({ _id: mongo.helper.toObjectID(_id) }, function(err) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
     deferred.resolve();

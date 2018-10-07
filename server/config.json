@@ -1,0 +1,5 @@
+{
+  "apiUrl": "http://localhost:4000",
+  "serverPort": 3003,
+  "secret": "TheSecret"
+}
