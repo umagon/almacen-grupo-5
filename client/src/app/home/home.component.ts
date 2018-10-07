@@ -1,10 +1,9 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { Usuario } from '../seguridad/modelos/usuario';
+import { UsuarioService } from '../seguridad/servicios/usuario.service';
 
-import { Usuario } from '../modulos/usuario';
-import { UsuarioService } from '../servicios/usuario.service';
 
 @Component({
-    moduleId: module.id,
     templateUrl: 'home.component.html'
 })
 
@@ -13,7 +12,7 @@ export class HomeComponent implements OnInit {
     usuarios: Usuario[] = [];
 
     constructor(private usuarioService: UsuarioService) {
-        this.usuarioActual = JSON.parse(localStorage.getItem('currentUser'));
+        this.usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
     }
 
     ngOnInit() {

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { appConfig } from '../app.config';
-import { Usuario } from '../modulos/usuario';
+import { appConfig } from '../../app.config';
+import { Usuario } from '../modelos/usuario';
 
 @Injectable()
 export class UsuarioService {

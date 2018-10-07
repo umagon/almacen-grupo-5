@@ -1,28 +1,27 @@
 ﻿import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
-//import { AlertService, UserService } from '../_services/index';
+import { UsuarioService } from '../servicios/usuario.service';
+import { AlertService } from '../../alert/alert.service';
 
 @Component({
-    moduleId: module.id,
-    templateUrl: 'register.component.html'
+    templateUrl: 'registracion.component.html'
 })
 
-export class RegisterComponent {
+export class RegistracionComponent {
     model: any = {};
     loading = false;
 
     constructor(
         private router: Router,
-        private userService: UserService,
+        private usuarioService: UsuarioService,
         private alertService: AlertService) { }
 
-    register() {
+    registrarse() {
         this.loading = true;
-        this.userService.create(this.model)
+        this.usuarioService.create(this.model)
             .subscribe(
                 data => {
-                    this.alertService.success('Registration successful', true);
+                    this.alertService.success('Registración exitosa', true);
                     this.router.navigate(['/login']);
                 },
                 error => {
