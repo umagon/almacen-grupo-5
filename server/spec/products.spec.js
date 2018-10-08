@@ -8,6 +8,7 @@ describe('Server product test', function() {
     username: 'Pepe',
     password: 'asd'
   };
+  var productos = [];
   var productTest = {
     nombre: 'Sprite',
     descripcion: 'Gaseosa sabor limón',
@@ -47,7 +48,6 @@ describe('Server product test', function() {
     });
     it('Status code 200', () => {
       console.log('Auth');
-      console.log(data.body);
       tokenSession = JSON.parse(data.body).token;
       userTest.perfil = JSON.parse(data.body).perfil;
       userTest._id = JSON.parse(data.body)._id;
@@ -72,10 +72,8 @@ describe('Server product test', function() {
       });
     });
     it('Get all', () => {
-      var productos = JSON.parse(data.body);
-      productTest = productos.find(function(producto) {
-        return producto.nombre === 'Sprite';
-      });
+      productos = JSON.parse(data.body);
+
       expect(data.status).toBe(200);
     });
   });
@@ -83,6 +81,9 @@ describe('Server product test', function() {
   describe('Delete', function() {
     var data = {};
     beforeAll(done => {
+      productTest = productos.find(function(producto) {
+        return producto.nombre === 'Sprite';
+      });
       var url = base_url + 'products/' + productTest._id;
       var params = {
         url: url,
@@ -97,9 +98,29 @@ describe('Server product test', function() {
       });
     });
     it('Status code 200', () => {
-      console.log('Delete');
       console.log(data.body);
-      console.log(url);
+      expect(data.status).toBe(200);
+    });
+  });
+
+  describe('Create', function() {
+    var data = {};
+    var url = base_url + 'products';
+    var params = {
+      url: url,
+      form: productTest,
+      headers: {
+        authorization: 'Bearer ' + tokenSession
+      }
+    };
+    beforeAll(done => {
+      request.post(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Create', () => {
       expect(data.status).toBe(200);
     });
   });

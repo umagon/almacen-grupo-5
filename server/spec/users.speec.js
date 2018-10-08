@@ -47,7 +47,6 @@ describe('Server users test', function() {
 
   describe('Delete', function() {
     var data = {};
-
     beforeAll(done => {
       var url = base_url + '/' + userTest._id;
       var params = {
@@ -97,7 +96,6 @@ describe('Server users test', function() {
         authorization: 'Bearer ' + tokenSession
       }
     };
-    //(params);
     beforeAll(done => {
       request.get(params, (error, response, body) => {
         data.status = response.statusCode;
@@ -107,7 +105,6 @@ describe('Server users test', function() {
     });
     it('Status code 200', () => {
       console.log('Get all');
-      console.log(data.body);
       expect(data.status).toBe(200);
     });
   });

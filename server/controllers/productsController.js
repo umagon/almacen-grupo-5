@@ -61,7 +61,7 @@ function update(req, res) {
 
 function _delete(req, res) {
   productService
-    .delete(req.params._id)
+    .delete(req.params.id)
     .then(function() {
       res.json('success');
     })

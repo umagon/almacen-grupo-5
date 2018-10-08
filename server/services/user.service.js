@@ -152,8 +152,7 @@ function update(_id, userParam) {
 
 function _delete(id) {
   var deferred = Q.defer();
-  console.log(id);
-  Usuario.remove({ _id: id }, function(err) {
+  Usuario.deleteMany({ _id: id }, function(err) {
     if (err) deferred.reject(err.name + ': ' + err.message);
     deferred.resolve();
   });
