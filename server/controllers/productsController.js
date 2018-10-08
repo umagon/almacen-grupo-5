@@ -1,36 +1,18 @@
 'use strict';
-//var config = require('config.json');
 
-var userService = require('../services/user.service');
+var productService = require('../services/products.service');
 var express = require('express');
 var router = express.Router();
 
-router.post('/', authenticate);
-router.post('/register', register);
+router.post('/', create);
 router.get('/', getAll);
-router.get('/current', getCurrent);
 router.put('/:_id', update);
 router.delete('/:_id', _delete);
 
 module.exports = router;
 
-function authenticate(req, res) {
-  userService
-    .authenticate(req.body.username, req.body.password)
-    .then(function(user) {
-      if (user) {
-        res.send(user);
-      } else {
-        res.status(400).send('Username or password is incorrect');
-      }
-    })
-    .catch(function(err) {
-      res.status(400).send(err);
-    });
-}
-
-function register(req, res) {
-  userService
+function create(req, res) {
+  productService
     .create(req.body)
     .then(function() {
       res.json('User created!');
@@ -41,7 +23,7 @@ function register(req, res) {
 }
 
 function getAll(req, res) {
-  userService
+  productService
     .getAll()
     .then(function(users) {
       res.send(users);
@@ -52,7 +34,7 @@ function getAll(req, res) {
 }
 
 function getCurrent(req, res) {
-  userService
+  productService
     .getById(req.user.sub)
     .then(function(user) {
       if (user) {
@@ -67,7 +49,7 @@ function getCurrent(req, res) {
 }
 
 function update(req, res) {
-  userService
+  productService
     .update(req.params._id, req.body)
     .then(function() {
       res.json('success');
@@ -78,7 +60,7 @@ function update(req, res) {
 }
 
 function _delete(req, res) {
-  userService
+  productService
     .delete(req.params._id)
     .then(function() {
       res.json('success');

@@ -1,15 +1,14 @@
 var request = require('request');
-var base_url = 'http://localhost:3003/users/';
+var base_url = 'http://localhost:3003/';
 
-describe('Server users test', function() {
+describe('Server product test', function() {
   var server;
   var tokenSession = '';
   var userTest = {
     username: 'Pepe',
-    password: 'asd',
-    perfil: 'user',
-    isBorrado: false
+    password: 'asd'
   };
+  var productTest = {};
 
   beforeAll(function() {
     server = require('../server');
@@ -21,7 +20,7 @@ describe('Server users test', function() {
 
   describe('Authenticate', function() {
     var data = {};
-    var url = base_url;
+    var url = base_url + 'users/';
     var params = {
       url: url,
       form: {
@@ -37,43 +36,17 @@ describe('Server users test', function() {
       });
     });
     it('Status code 200', () => {
-      console.log('Auth');
       tokenSession = JSON.parse(data.body).token;
-      userTest.perfil = JSON.parse(data.body).perfil;
-      userTest._id = JSON.parse(data.body)._id;
       expect(data.status).toBe(200);
     });
   });
 
-  describe('Delete', function() {
+  describe('Create', function() {
     var data = {};
-
-    beforeAll(done => {
-      var url = base_url + '/' + userTest._id;
-      var params = {
-        url: url,
-        headers: {
-          authorization: 'Bearer ' + tokenSession
-        }
-      };
-      request.delete(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        done();
-      });
-    });
-    it('Status code 200', () => {
-      console.log('Delete');
-      expect(data.status).toBe(200);
-    });
-  });
-
-  describe('Register', function() {
-    var data = {};
-    var url = base_url + 'register';
+    var url = base_url + 'products/';
     var params = {
       url: url,
-      form: userTest
+      form: productTest
     };
     beforeAll(done => {
       request.post(params, (error, response, body) => {
@@ -82,8 +55,9 @@ describe('Server users test', function() {
         done();
       });
     });
-    it('Create User', () => {
-      console.log('Create');
+    it('Create', () => {
+      console.log('1');
+      console.log(data.body);
       expect(data.status).toBe(200);
     });
   });
@@ -105,8 +79,44 @@ describe('Server users test', function() {
         done();
       });
     });
+    it('Get all', () => {
+      console.log('3');
+      console.log(body.data);
+      expect(data.status).toBe(200);
+    });
+  });
+
+  describe('Delete', function() {
+    //('Delete ');
+
+    var data = {};
+
+    var url = base_url + '/' + userTest._id;
+    //(url);
+
+    var params = {
+      url: url,
+      form: {
+        username: userTest.username,
+        password: userTest.password
+      },
+      headers: {
+        authorization: 'Bearer ' + tokenSession
+      }
+    };
+    //(params);
+
+    //('Delete ');
+    beforeAll(done => {
+      request.delete(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
     it('Status code 200', () => {
-      console.log('Get all');
+      //(data.body);
+      console.log('4');
       console.log(data.body);
       expect(data.status).toBe(200);
     });

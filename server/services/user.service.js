@@ -3,7 +3,6 @@ var _ = require('lodash');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
 var Q = require('q');
-var mongoose = require('mongoose');
 var Usuario = require('../models/usuario');
 
 var service = {};
@@ -158,10 +157,10 @@ function update(_id, userParam) {
   return deferred.promise;
 }
 
-function _delete(_id) {
+function _delete(id) {
   var deferred = Q.defer();
-
-  Usuario.remove({ _id: mongo.helper.toObjectID(_id) }, function(err) {
+  console.log(id);
+  Usuario.remove({ _id: id }, function(err) {
     if (err) deferred.reject(err.name + ': ' + err.message);
 
     deferred.resolve();

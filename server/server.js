@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/users', require('./controllers/usersController'));
+app.use('/products', require('./controllers/productsController'));
 
 app.use(
   expressJwt({
