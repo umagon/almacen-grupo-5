@@ -12,14 +12,14 @@ describe('Almacen Test', function() {
   };
   var productos = [];
   var productTest = {
-    nombre: 'Sprite',
-    descripcion: 'Gaseosa sabor limón',
+    nombre: 'Producto Test',
+    descripcion: 'Producto de Test',
     stock: 200,
     stockLimite: 50,
     isBorrado: false,
     proveedor: {
-      nombre: 'Coca-Cola Company',
-      email: 'company@cocacola.com'
+      nombre: 'Test',
+      email: 'test@test.com'
     }
   };
   var pedidos = [];
@@ -167,6 +167,7 @@ describe('Almacen Test', function() {
     });
   });
 
+  /*
   describe('Usuarios', function() {
     var data = {};
     var url = base_url + 'users/';
@@ -188,6 +189,7 @@ describe('Almacen Test', function() {
       expect(data.status).toBe(400);
     });
   });
+  */
 
   describe('Usuarios', function() {
     var data = {};
@@ -211,82 +213,7 @@ describe('Almacen Test', function() {
     });
   });
 
-  /*
-  describe('Authenticate', function() {
-    var data = {};
-    var url = base_url + 'users/';
-    var params = {
-      url: url,
-      form: {
-        username: userTest.username,
-        password: userTest.password
-      }
-    };
-    beforeAll(done => {
-      request.post(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        done();
-      });
-    });
-    it('Status code 200', () => {
-      console.log('Auth');
-      tokenSession = JSON.parse(data.body).token;
-      userTest.perfil = JSON.parse(data.body).perfil;
-      userTest._id = JSON.parse(data.body)._id;
-      expect(data.status).toBe(200);
-    });
-  });
-
-  describe('Get all', function() {
-    var data = {};
-    var url = base_url + 'products/';
-    var params = {
-      url: url,
-      headers: {
-        authorization: 'Bearer ' + tokenSession
-      }
-    };
-    beforeAll(done => {
-      request.get(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        done();
-      });
-    });
-    it('Get all', () => {
-      productos = JSON.parse(data.body);
-
-      expect(data.status).toBe(200);
-    });
-  });
-
-  describe('Delete', function() {
-    var data = {};
-    beforeAll(done => {
-      productTest = productos.find(function(producto) {
-        return producto.nombre === 'Sprite';
-      });
-      var url = base_url + 'products/' + productTest._id;
-      var params = {
-        url: url,
-        headers: {
-          authorization: 'Bearer ' + tokenSession
-        }
-      };
-      request.delete(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        done();
-      });
-    });
-    it('Status code 200', () => {
-      console.log(data.body);
-      expect(data.status).toBe(200);
-    });
-  });
-
-  describe('Create', function() {
+  describe('Productos', function() {
     var data = {};
     var url = base_url + 'products';
     var params = {
@@ -303,11 +230,61 @@ describe('Almacen Test', function() {
         done();
       });
     });
-    it('Create', () => {
+    it('Crear producto de prueba', () => {
+      console.log('Crear producto de prueba.');
       expect(data.status).toBe(200);
     });
   });
 
+  describe('Productos', function() {
+    var data = {};
+    var url = base_url + 'products/';
+    var params = {
+      url: url,
+      headers: {
+        authorization: 'Bearer ' + tokenSession
+      }
+    };
+    beforeAll(done => {
+      request.get(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Obtener todos los productos', () => {
+      productos = JSON.parse(data.body);
+      console.log('Obtener todos los productos.');
+      expect(data.status).toBe(200);
+    });
+  });
+
+  describe('Productos', function() {
+    var data = {};
+    beforeAll(done => {
+      productTest = productos.find(function(producto) {
+        return producto.nombre === productTest.nombre;
+      });
+      var url = base_url + 'products/' + productTest._id;
+      var params = {
+        url: url,
+        headers: {
+          authorization: 'Bearer ' + tokenSession
+        }
+      };
+      request.delete(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Borrar producto de prueba.', () => {
+      console.log('Borrar producto de prueba.');
+      expect(data.status).toBe(200);
+    });
+  });
+
+  /*
   describe('Crear pedido de prueba', function() {
     var data = {};
     beforeAll(done => {
