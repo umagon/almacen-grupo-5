@@ -9,6 +9,7 @@ import { RegistracionComponent } from "./registracion/registracion.component";
 import { AutenticacionService } from "./servicios/autenticacion.service";
 import { UsuarioService } from "./servicios/usuario.service";
 import { HttpClientModule } from "@angular/common/http";
+import { UsuariosComponent } from "./usuarios/usuarios.component";
 
 @NgModule({
     imports: [
@@ -20,11 +21,13 @@ import { HttpClientModule } from "@angular/common/http";
     ],
     exports: [
         LoginComponent,
-        RegistracionComponent
+        RegistracionComponent,
+        UsuariosComponent,
     ],
     declarations: [
         LoginComponent,
-        RegistracionComponent
+        RegistracionComponent,
+        UsuariosComponent,
     ],
     providers: [
         AutenticacionService,

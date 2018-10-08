@@ -3,4 +3,7 @@
     <b>Hola, {{usuarioActual.username}}!</b>
     <a [routerLink]="['/login']">Salir</a>
 </div>
+<a href="#" [routerLink]="['/home']" routerLinkActive="home">Inicio</a>
+<a href="#" [routerLink]="['/productos']" routerLinkActive="productos" >Productos</a>
+<a href="#" [routerLink]="['/usuarios']" routerLinkActive="usuarios" >Usuarios</a>
 <router-outlet></router-outlet>
