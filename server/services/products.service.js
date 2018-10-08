@@ -58,7 +58,6 @@ function update() {
 
 function _delete(id) {
   var deferred = Q.defer();
-  console.log(id);
   Producto.deleteMany({ _id: id }, function(err) {
     if (err) deferred.reject(err.name + ': ' + err.message);
     deferred.resolve();

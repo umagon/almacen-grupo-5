@@ -13,36 +13,33 @@ module.exports = service;
 
 function getAll() {
   var deferred = Q.defer();
-  Pedido.find({}, function(err, [pedidos]) {
+  Pedido.find({}, function(err, pedidos) {
     if (err) deferred.reject(err.name + ': ' + err.message);
-    deferred.resolve([pedidos]);
+    deferred.resolve(pedidos);
   });
   return deferred.promise;
 }
 
 function create(orderParams) {
   var deferred = Q.defer();
-  Pedido.findOne({ nombre: orderParams.compra.numeroCompra }, function(
-    err,
-    order
-  ) {
-    if (err) deferred.reject(err.name + ': ' + err.message);
-    if (order) {
-      deferred.reject(
-        'Pedido "' + orderParams.compra.numeroCompra + '" ya existe.'
-      );
-    } else {
-      createOrder(orderParams);
+  Pedido.findOne(
+    { 'compra.numeroCompra': orderParams.compra.numeroCompra },
+    function(err, order) {
+      if (err) deferred.reject(err.name + ': ' + err.message);
+      if (order) {
+        deferred.reject(
+          'Pedido "' + orderParams.compra.numeroCompra + '" ya existe.'
+        );
+      } else {
+        createOrder(orderParams);
+      }
     }
-  });
+  );
 
   function createOrder(order) {
-    console.log('Pedidooo');
-    console.log(order);
     var new_order = new Pedido(order);
     new_order.save(function(err, order) {
       if (err) deferred.reject(err.name + ': ' + err.message);
-      console.log(order);
       deferred.resolve();
     });
   }
@@ -63,7 +60,6 @@ function update() {
 
 function _delete(id) {
   var deferred = Q.defer();
-  console.log(id);
   Pedido.deleteMany({ _id: id }, function(err) {
     if (err) deferred.reject(err.name + ': ' + err.message);
     deferred.resolve();

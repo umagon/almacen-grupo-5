@@ -25,23 +25,8 @@ function create(req, res) {
 function getAll(req, res) {
   productService
     .getAll()
-    .then(function(users) {
-      res.send(users);
-    })
-    .catch(function(err) {
-      res.status(400).send(err);
-    });
-}
-
-function getCurrent(req, res) {
-  productService
-    .getById(req.user.sub)
-    .then(function(user) {
-      if (user) {
-        res.send(user);
-      } else {
-        res.sendStatus(404);
-      }
+    .then(function(products) {
+      res.send(products);
     })
     .catch(function(err) {
       res.status(400).send(err);

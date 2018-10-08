@@ -19,18 +19,12 @@ var PedidoSchema = new Schema({
     cantidad: Number,
     descripcion: String
   },
-<<<<<<< HEAD
+  estado: {
+    type: [{ type: String, enum: ['Pendiente', 'Enviado', 'Entregado'] }]
+  },
   cantidad: Number,
   fechaCompra: Date,
   fechaEntrega: Date
-=======
-  estado: { 
-    type: [{ type: String, enum: ['Pendiente', 'Enviado', 'Entregado'] }]
-  },
-  cantidad: { type: Number, default: 1 },
-  fechaCompra: { type: Date, default: Date.now },
-  fechaEntrega: { type: Date }
->>>>>>> ea4bcbed185e0dd30d3ee3e15b851e9a26f1830c
 });
 
 module.exports = mongoose.model('Pedido', PedidoSchema);

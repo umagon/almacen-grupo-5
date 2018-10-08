@@ -35,7 +35,7 @@ app.use(
       }
       return null;
     }
-  }).unless({ path: ['/users/authenticate', '/users/register', '/users'] })
+  }).unless({ path: ['/users/authenticate', '/users/register'] })
 );
 
 app.use(function(err, req, res, next) {

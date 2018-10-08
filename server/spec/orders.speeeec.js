@@ -11,7 +11,7 @@ describe('Server orders test', function() {
   var pedidos = [];
   var orderTest = {
     compra: {
-      numeroCompra: 412,
+      numeroCompra: 0,
       producto: {
         nombre: 'Coca-cola',
         descripcion: 'Gaseosa sabor cola',
@@ -23,12 +23,12 @@ describe('Server orders test', function() {
           email: 'company@cocacola.com'
         }
       },
-      cantidad: 71,
-      descripcion: 'Compra mayorista'
+      cantidad: 1,
+      descripcion: 'Compra test'
     },
-    cantidad: 18,
-    fechaCompra: Date.now,
-    fechaEntrega: Date.now
+    cantidad: 1,
+    fechaCompra: 1,
+    fechaEntrega: 1
   };
 
   beforeAll(function() {
@@ -39,7 +39,7 @@ describe('Server orders test', function() {
     server.close();
   });
 
-  describe('Authenticate', function() {
+  describe('Autenticación de usuario.', function() {
     var data = {};
     var url = base_url + 'users/';
     var params = {
@@ -56,15 +56,62 @@ describe('Server orders test', function() {
         done();
       });
     });
-    it('Status code 200', () => {
+    it('Autenticación de usuario.', () => {
       tokenSession = JSON.parse(data.body).token;
       userTest.perfil = JSON.parse(data.body).perfil;
       userTest._id = JSON.parse(data.body)._id;
+      console.log('Autenticación de usuario.');
       expect(data.status).toBe(200);
     });
   });
 
-  describe('Get all', function() {
+  describe('Crear pedido de prueba', function() {
+    var data = {};
+    beforeAll(done => {
+      var url = base_url + 'orders';
+      var params = {
+        url: url,
+        form: orderTest,
+        headers: {
+          authorization: 'Bearer ' + tokenSession
+        }
+      };
+      request.post(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Creación de producto de prueba', () => {
+      console.log('Creación de producto de prueba.');
+      expect(data.status).toBe(200);
+    });
+  });
+
+  describe('Crear pedido duplicado', function() {
+    var data = {};
+    beforeAll(done => {
+      var url = base_url + 'orders';
+      var params = {
+        url: url,
+        form: orderTest,
+        headers: {
+          authorization: 'Bearer ' + tokenSession
+        }
+      };
+      request.post(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Verificación de duplicado', () => {
+      console.log('Prohibir creación de producto duplicado.');
+      expect(data.status).toBe(400);
+    });
+  });
+
+  describe('Obtener todos los pedidos', function() {
     var data = {};
     var url = base_url + 'orders/';
     var params = {
@@ -80,17 +127,14 @@ describe('Server orders test', function() {
         done();
       });
     });
-    it('Get all', () => {
-      orders = JSON.parse(data.body);
-      console.log('HOLA 1');
-      console.log(orders);
-      console.log('HOLA 2');
-
+    it('Obtener todos los pedidos.', () => {
+      pedidos = JSON.parse(data.body);
+      console.log('Obtener todos los pedidos.');
       expect(data.status).toBe(200);
     });
   });
 
-  describe('Delete', function() {
+  describe('Borrar pedido de prueba.', function() {
     var data = {};
     beforeAll(done => {
       orderTest = pedidos.find(function(pedido) {
@@ -109,31 +153,8 @@ describe('Server orders test', function() {
         done();
       });
     });
-    it('Status code 200', () => {
-      console.log(data.body);
-      expect(data.status).toBe(200);
-    });
-  });
-
-  describe('Create', function() {
-    var data = {};
-
-    beforeAll(done => {
-      var url = base_url + 'orders';
-      var params = {
-        url: url,
-        form: orderTest,
-        headers: {
-          authorization: 'Bearer ' + tokenSession
-        }
-      };
-      request.post(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        done();
-      });
-    });
-    it('Create', () => {
+    it('Borrar pedido de prueba.', () => {
+      console.log('Borrar pedido de prueba');
       expect(data.status).toBe(200);
     });
   });
