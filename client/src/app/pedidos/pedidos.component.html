@@ -1,35 +1,15 @@
 <h3>Stock de pedidos</h3>
-<button type="button" class="btn btn-success" (click)="pedidoActual = {}" *ngIf="!pedidoActual">Agregar</button>
-<app-pedido *ngIf="pedidoActual" [(model)]="pedidoActual" (exito)="nuevo($event)"></app-pedido>
-<br><br>
 <img *ngIf="loading>0" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
 <div *ngIf="pedidos">
 	<p-accordion [multiple]="true">
-		<p-accordionTab header="Header 1">
-			<p *ngIf="!pedidos.length">No hay pedidos</p>
-			<table class="table" *ngIf="pedidos.length">
-				<tr>
-					<th>Producto</th>
-					<th>Stock</th>
-					<th>Mínimo</th>
-					<th></th>
-				</tr>
-				<tr *ngFor="let pedido of pedidos">
-					<td [title]="pedido.descripcion">{{pedido.nombre}}</td>
-					<td>{{pedido.stock}}</td>
-					<td>{{pedido.stockLimite}}</td>
-					<td>
-						<button type="button" class="btn btn-danger" (click)="pedidoActual = pedido">Editar</button>
-						<button type="button" class="btn btn-danger" (click)="borrar(pedido._id)">Borrar</button>
-				</tr>
-			</table>
+		<p-accordionTab header="Enviados">
+			<pedidos-list [pedidos]="pedidosEnviados"></pedidos-list>
 		</p-accordionTab>
-		<p-accordionTab header="Header 2">
-			Content 2
+		<p-accordionTab header="Pendientes">
+			<pedidos-list [pedidos]="pedidosEntregados"></pedidos-list>
 		</p-accordionTab>
-		<p-accordionTab header="Header 3">
-			Content 3
+		<p-accordionTab header="Entregados">
+			<pedidos-list [pedidos]="pedidosEntregados"></pedidos-list>
 		</p-accordionTab>
 	</p-accordion>
-
 </div>

@@ -9,6 +9,9 @@ var PedidoSchema = new Schema({
     cantidad: Number,
     descripcion: String
   },
+  estado: { 
+    type: [{ type: String, enum: ['Pendiente', 'Enviado', 'Entregado'] }]
+  },
   cantidad: { type: Number, default: 1 },
   fechaCompra: { type: Date, default: Date.now },
   fechaEntrega: { type: Date }

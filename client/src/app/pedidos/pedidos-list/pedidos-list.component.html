@@ -1,0 +1,19 @@
+<p *ngIf="!pedidos.length">No hay pedidos</p>
+<table class="table" *ngIf="pedidos.length">
+	<tr>
+		<th>N° Compra</th>
+		<th>Producto</th>
+		<th>Comprado</th>
+		<th>Entregado</th>
+		<th></th>
+	</tr>
+	<tr *ngFor="let pedido of pedidos">
+		<td [title]="pedido.compra?.descripcion">{{pedido.compra?.nombre}}</td>
+		<td>{{pedido.compra?.producto?.nombre}}</td>
+		<td>{{pedido.compra?.fechaCompra}}</td>
+		<td>{{pedido.compra?.fechaEntrega}}</td>
+		<td>
+			<button type="button" class="btn btn-danger" (click)="borrar(pedido._id)">Borrar</button>
+		</td>
+	</tr>
+</table>
