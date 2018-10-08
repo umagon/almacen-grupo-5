@@ -1,11 +1,13 @@
-<!-- credits -->
-<div class="text-center" *ngIf="usuarioActual">
-    <b>Hola, {{usuarioActual.username}}!</b>
-    <a [routerLink]="['/login']">Salir</a>
+<div class="container">
+    <div class="text-center" *ngIf="usuarioActual">
+        <b>Hola, {{usuarioActual.username}}!</b>
+        <a [routerLink]="['/login']">Salir</a>
+    </div>
+    <app-alert></app-alert>
+    <a href="#" [routerLink]="['/home']" routerLinkActive="home">Inicio</a>
+    <a href="#" [routerLink]="['/productos']" routerLinkActive="productos" >Productos</a>
+    <a href="#" [routerLink]="['/usuarios']" routerLinkActive="usuarios" >Usuarios</a>
+    <a href="#" [routerLink]="['/pedidos']" routerLinkActive="pedidos" >Pedidos</a>
+    <router-outlet></router-outlet>
+
 </div>
-<app-alert></app-alert>
-<a href="#" [routerLink]="['/home']" routerLinkActive="home">Inicio</a>
-<a href="#" [routerLink]="['/productos']" routerLinkActive="productos" >Productos</a>
-<a href="#" [routerLink]="['/usuarios']" routerLinkActive="usuarios" >Usuarios</a>
-<a href="#" [routerLink]="['/pedidos']" routerLinkActive="pedidos" >Pedidos</a>
-<router-outlet></router-outlet>
