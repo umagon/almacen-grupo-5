@@ -98,7 +98,6 @@ describe('Server product test', function() {
       });
     });
     it('Status code 200', () => {
-      console.log(data.body);
       expect(data.status).toBe(200);
     });
   });

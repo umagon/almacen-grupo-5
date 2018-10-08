@@ -17,12 +17,9 @@ service.delete = _delete;
 module.exports = service;
 
 function authenticate(username, password) {
-  console.log(' autenticacion');
   var deferred = Q.defer();
-
   Usuario.findOne({ username: username }, function(err, user) {
     if (err) deferred.reject(err.name + ': ' + err.message);
-
     if (user && bcrypt.compareSync(password, user.password)) {
       deferred.resolve({
         _id: user._id,

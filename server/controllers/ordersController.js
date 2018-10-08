@@ -15,7 +15,7 @@ function create(req, res) {
   ordersService
     .create(req.body)
     .then(function() {
-      res.json('Product created!');
+      res.json('Order created!');
     })
     .catch(function(err) {
       res.status(400).send(err);
@@ -27,21 +27,6 @@ function getAll(req, res) {
     .getAll()
     .then(function(users) {
       res.send(users);
-    })
-    .catch(function(err) {
-      res.status(400).send(err);
-    });
-}
-
-function getCurrent(req, res) {
-  ordersService
-    .getById(req.user.sub)
-    .then(function(user) {
-      if (user) {
-        res.send(user);
-      } else {
-        res.sendStatus(404);
-      }
     })
     .catch(function(err) {
       res.status(400).send(err);

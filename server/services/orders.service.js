@@ -20,21 +20,29 @@ function getAll() {
   return deferred.promise;
 }
 
-function create(productParams) {
+function create(orderParams) {
   var deferred = Q.defer();
-  Pedido.findOne({ nombre: productParams.nombre }, function(err, product) {
+  Pedido.findOne({ nombre: orderParams.compra.numeroCompra }, function(
+    err,
+    order
+  ) {
     if (err) deferred.reject(err.name + ': ' + err.message);
-    if (product) {
-      deferred.reject('Pedido "' + productParams.nombre + '" ya existe.');
+    if (order) {
+      deferred.reject(
+        'Pedido "' + orderParams.compra.numeroCompra + '" ya existe.'
+      );
     } else {
-      createProduct(productParams);
+      createOrder(orderParams);
     }
   });
 
-  function createProduct(product) {
-    var new_producto = new Pedido(product);
-    new_producto.save(function(err, producto) {
+  function createOrder(order) {
+    console.log('Pedidooo');
+    console.log(order);
+    var new_order = new Pedido(order);
+    new_order.save(function(err, order) {
       if (err) deferred.reject(err.name + ': ' + err.message);
+      console.log(order);
       deferred.resolve();
     });
   }
@@ -43,12 +51,12 @@ function create(productParams) {
 
 function update() {
   Pedido.findOneAndUpdate(
-    { _id: req.params.productoId },
+    { _id: req.params.orderoId },
     req.body,
     { new: true },
-    function(err, producto) {
+    function(err, ordero) {
       if (err) res.send(err);
-      res.json(producto);
+      res.json(ordero);
     }
   );
 }
