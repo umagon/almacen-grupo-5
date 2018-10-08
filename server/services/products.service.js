@@ -44,16 +44,54 @@ function create(productParams) {
   return deferred.promise;
 }
 
-function update() {
-  Producto.findOneAndUpdate(
-    { _id: req.params.productoId },
-    req.body,
-    { new: true },
-    function(err, producto) {
-      if (err) res.send(err);
-      res.json(producto);
+function update(_id, productParam) {
+  var deferred = Q.defer();
+  Producto.findById(_id, function(err, product) {
+    if (err) deferred.reject(err.name + ': ' + err.message);
+    if (product.nombre !== productParam.nombre) {
+      Producto.findOne({ nombre: productParam.nombre }, function(err, product) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+        if (product) {
+          deferred.reject(
+            'Username "' + productParam.nombre + '" is already taken'
+          );
+        } else {
+          updateProduct(_id, productParam);
+        }
+      });
+    } else {
+      updateProduct(_id, productParam);
     }
-  );
+  });
+
+  function updateProduct(_id, productParam) {
+    var set = {};
+    if (productParam.nombre) {
+      set.nombre = productParam.nombre;
+    }
+    if (productParam.descripcion) {
+      set.descripcion = productParam.descripcion;
+    }
+    if (productParam.stock) {
+      set.stock = productParam.stock;
+    }
+    if (productParam.stockLimite) {
+      set.stockLimite = productParam.stockLimite;
+    }
+    if (productParam.proveedor) {
+      set.proveedor = productParam.proveedor;
+    }
+
+    Producto.findOneAndUpdate({ _id: _id }, set, { new: true }, function(
+      err,
+      producto
+    ) {
+      if (err) deferred.reject(err.name + ': ' + err.message);
+      deferred.resolve();
+    });
+  }
+
+  return deferred.promise;
 }
 
 function _delete(id) {

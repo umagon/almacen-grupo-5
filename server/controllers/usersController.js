@@ -9,9 +9,9 @@ router.post('/', authenticate);
 router.delete('/:_id', _delete);
 router.post('/register', register);
 router.get('/', getAll);
+router.put('/:_id', update);
 
 router.get('/current', getCurrent);
-router.put('/:_id', update);
 
 module.exports = router;
 

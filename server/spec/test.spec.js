@@ -73,15 +73,12 @@ describe('Almacen Test', function() {
     });
   });
 
-  describe('Autenticación de usuario', function() {
+  describe('Usuarios', function() {
     var data = {};
     var url = base_url + 'users/';
     var params = {
       url: url,
-      form: {
-        username: userTest.username,
-        password: ''
-      }
+      form: userTest
     };
     beforeAll(done => {
       request.post(params, (error, response, body) => {
@@ -90,9 +87,9 @@ describe('Almacen Test', function() {
         done();
       });
     });
-    it('Autenticación de usuario con password incorrecta.', () => {
-      console.log('Autenticación de usuario con password incorrecta.');
-      expect(data.status).toBe(400);
+    it('Creación de usuario de prueba', () => {
+      console.log('Creación de usuario de prueba');
+      expect(data.status).toBe(200);
     });
   });
 
@@ -213,6 +210,50 @@ describe('Almacen Test', function() {
     });
   });
 
+  describe('Actualización de usuario', function() {
+    var data = {};
+    beforeAll(done => {
+      var url = base_url + 'users/' + userTest._id;
+      var params = {
+        url: url,
+        form: {
+          username: 'PePEE'
+        }
+      };
+      request.put(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Actualización de usuario.', () => {
+      console.log('Actualización de usuario.');
+      expect(data.status).toBe(200);
+    });
+  });
+
+  describe('Usuarios', function() {
+    var data = {};
+    var url = base_url + 'users/';
+    var params = {
+      url: url,
+      headers: {
+        authorization: 'Bearer ' + tokenSession
+      }
+    };
+    beforeAll(done => {
+      request.get(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Obtener todos los usuarios.', () => {
+      console.log('Obtener todos los usuarios.');
+      expect(data.status).toBe(200);
+    });
+  });
+
   describe('Productos', function() {
     var data = {};
     var url = base_url + 'products';
@@ -255,6 +296,55 @@ describe('Almacen Test', function() {
     it('Obtener todos los productos', () => {
       productos = JSON.parse(data.body);
       console.log('Obtener todos los productos.');
+      expect(data.status).toBe(200);
+    });
+  });
+
+  describe('Actualización de producto', function() {
+    var data = {};
+    beforeAll(done => {
+      productTest = productos.find(function(producto) {
+        return producto.nombre === productTest.nombre;
+      });
+      var url = base_url + 'products/' + productTest._id;
+      var params = {
+        url: url,
+        form: {
+          descripcion: 'Nueva descripcion'
+        }
+      };
+      request.put(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Actualización de producto.', () => {
+      console.log('Actualización de producto.');
+      expect(data.status).toBe(200);
+    });
+  });
+
+  describe('Productos', function() {
+    var data = {};
+    var url = base_url + 'products/';
+    var params = {
+      url: url,
+      headers: {
+        authorization: 'Bearer ' + tokenSession
+      }
+    };
+    beforeAll(done => {
+      request.get(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Obtener todos los productos', () => {
+      productos = JSON.parse(data.body);
+      console.log('Obtener todos los productos.');
+      console.log(productos);
       expect(data.status).toBe(200);
     });
   });

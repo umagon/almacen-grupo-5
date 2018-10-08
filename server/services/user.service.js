@@ -96,52 +96,39 @@ function create(userParam) {
 
 function update(_id, userParam) {
   var deferred = Q.defer();
-
-  // validation
   Usuario.findById(_id, function(err, user) {
     if (err) deferred.reject(err.name + ': ' + err.message);
-
     if (user.username !== userParam.username) {
-      // username has changed so check if the new username is already taken
       Usuario.findOne({ username: userParam.username }, function(err, user) {
         if (err) deferred.reject(err.name + ': ' + err.message);
-
         if (user) {
-          // username already exists
           deferred.reject(
-            'Username "' + req.body.username + '" is already taken'
+            'Username "' + userParam.username + '" is already taken'
           );
         } else {
-          updateUser();
+          updateUser(_id, userParam);
         }
       });
     } else {
-      updateUser();
+      updateUser(_id, userParam);
     }
   });
 
-  function updateUser() {
-    // fields to update
-    var set = {
-      firstName: userParam.firstName,
-      lastName: userParam.lastName,
-      username: userParam.username
-    };
-
-    // update password if it was entered
-    if (userParam.password) {
-      set.hash = bcrypt.hashSync(userParam.password, 10);
+  function updateUser(_id, userParam) {
+    var set = {};
+    if (userParam.username) {
+      set.username = userParam.username;
     }
-
-    Usuario.update(
-      { _id: mongo.helper.toObjectID(_id) },
-      { $set: set },
-      function(err, doc) {
-        if (err) deferred.reject(err.name + ': ' + err.message);
-
-        deferred.resolve();
-      }
-    );
+    if (userParam.password) {
+      set.password = bcrypt.hashSync(userParam.password, 10);
+    }
+    Usuario.findOneAndUpdate({ _id: _id }, set, { new: true }, function(
+      err,
+      usuario
+    ) {
+      if (err) deferred.reject(err.name + ': ' + err.message);
+      deferred.resolve();
+    });
   }
 
   return deferred.promise;
