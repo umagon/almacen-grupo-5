@@ -9,6 +9,8 @@ import { finalize, tap } from 'rxjs/operators';
 })
 export class ProductosComponent implements OnInit {
 	loading = 0;
+
+	productoActual;
 	productos;
 	constructor(private productoService: ProductosService) {
 	}
