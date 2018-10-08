@@ -1,12 +1,12 @@
 ﻿<div class="col-md-6 col-md-offset-3">
-    <h1>Hola, {{usuarioActual.nombre}}!</h1>
-    <p>Bienvenido a la plataforma de Almacen</p>
+    <div class="jumbotron">
+        <h2>Bienvenido a la plataforma de Almacen</h2>
+    </div>
     <h3>Usuarios registrados</h3>
     <ul>
         <li *ngFor="let usuario of usuarios">
-            {{usuario.usuarioname}} ({{usuario.nombre}} {{usuario.apellido}})
-            - <a (click)="borrarUsuario(usuario._id)">Delete</a>
+            {{usuario.username}}
+            - <button type="button" class="btn btn-danger" (click)="borrarUsuario(usuario._id)">Delete</button>
         </li>
     </ul>
-    <p><a [routerLink]="['/login']">Salir</a></p>
 </div>

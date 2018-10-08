@@ -2,6 +2,7 @@
 import { Router, ActivatedRoute } from '@angular/router';
 import { AutenticacionService } from '../servicios/autenticacion.service';
 import { AlertService } from '../../alert/alert.service';
+import { log } from 'util';
 
 @Component({
     templateUrl: 'login.component.html'
@@ -23,7 +24,9 @@ export class LoginComponent implements OnInit {
         this.autenticacionService.logout();
 
         // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.route.queryParams.subscribe(params=> {
+            this.returnUrl = params.returnUrl;
+        });
     }
 
     login() {
@@ -31,7 +34,7 @@ export class LoginComponent implements OnInit {
         this.autenticacionService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    this.router.navigate([this.returnUrl||'/']);
                 },
                 error => {
                     this.alertService.error(error);

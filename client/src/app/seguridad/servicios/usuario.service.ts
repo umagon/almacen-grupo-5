@@ -4,27 +4,29 @@ import { HttpClient } from '@angular/common/http';
 import { appConfig } from '../../app.config';
 import { Usuario } from '../modelos/usuario';
 
+const PATH = appConfig.apiUrl + '/users';
+
 @Injectable()
 export class UsuarioService {
     constructor(private http: HttpClient) { }
 
     getAll() {
-        return this.http.get<Usuario[]>(appConfig.apiUrl + '/usuarios');
+        return this.http.get<Usuario[]>(PATH);
     }
 
     getById(_id: string) {
-        return this.http.get(appConfig.apiUrl + '/usuarios/' + _id);
+        return this.http.get(PATH + '/' + _id);
     }
 
     create(usuario: Usuario) {
-        return this.http.post(appConfig.apiUrl + '/usuarios/register', usuario);
+        return this.http.post(PATH + '/register', usuario);
     }
 
     update(usuario: Usuario) {
-        return this.http.put(appConfig.apiUrl + '/usuarios/' + usuario._id, usuario);
+        return this.http.put(PATH + '/' + usuario._id, usuario);
     }
 
     delete(_id: string) {
-        return this.http.delete(appConfig.apiUrl + '/usuarios/' + _id);
+        return this.http.delete(PATH + '/' + _id);
     }
 }
