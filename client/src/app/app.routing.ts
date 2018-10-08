@@ -5,6 +5,7 @@ import { LoginComponent } from './seguridad/login/login.component';
 import { RegistracionComponent } from './seguridad/registracion/registracion.component';
 import { ProductosComponent } from './productos/list/productos.component';
 import { UsuariosComponent } from './seguridad/usuarios/usuarios.component';
+import { PedidosComponent } from './pedidos/pedidos.component';
 
 
 const appRoutes: Routes = [
@@ -13,6 +14,7 @@ const appRoutes: Routes = [
     { path: 'registracion', component: RegistracionComponent },
     { path: 'productos', component: ProductosComponent },
     { path: 'usuarios', component: UsuariosComponent },
+    { path: 'pedidos', component: PedidosComponent },
 
     // Sino, redirigir al home
     { path: '**', redirectTo: '' }

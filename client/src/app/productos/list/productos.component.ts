@@ -16,7 +16,6 @@ export class ProductosComponent implements OnInit {
 	}
 
 	ngOnInit() {
-
 		this.loading++;
 		this.productoService.getAll().pipe(
 			finalize(() => this.loading--)
