@@ -1,8 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-
-
 @import "~primeng/resources/primeng.min.css";
-@import "~primeng/resources/themes/omega/theme.css";
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/themes/nova-light/theme.css";
 
 @import '~node_modules/bootstrap/scss/bootstrap';
 @import '~node_modules/bootstrap/scss/bootstrap-grid';
+
+
+.btn{
+    margin-left: 5px;
+}

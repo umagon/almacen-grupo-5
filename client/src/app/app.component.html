@@ -1,13 +1,26 @@
 <div class="container">
-    <div class="text-center" *ngIf="usuarioActual">
-        <b>Hola, {{usuarioActual.username}}!</b>
-        <a [routerLink]="['/login']">Salir</a>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" [routerLink]="['/home']">Almacen</a>
+        <div class="collapse navbar-collapse" *ngIf="!router.isActive('login')">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" [routerLink]="['/productos']" routerLinkActive="active">
+                    <a (click)="false" href="#" class="nav-link">Productos</a>
+                </li>
+                <li class="nav-item" [routerLink]="['/usuarios']" routerLinkActive="active">
+                    <a (click)="false" href="#" class="nav-link">Usuarios</a>
+                </li>
+                <li class="nav-item" [routerLink]="['/pedidos']" routerLinkActive="active">
+                    <a (click)="false" href="#" class="nav-link">Pedidos</a>
+                </li>
+            </ul>
+            <span class="navbar-text" *ngIf="usuarioActual">
+                <b>Hola, {{usuarioActual.username}}!</b>
+                <a style="margin-left:10px" [routerLink]="['/login']">Salir</a>
+            </span>
+        </div>
+    </nav>
+
     <app-alert></app-alert>
-    <a href="#" [routerLink]="['/home']" routerLinkActive="home">Inicio</a>
-    <a href="#" [routerLink]="['/productos']" routerLinkActive="productos" >Productos</a>
-    <a href="#" [routerLink]="['/usuarios']" routerLinkActive="usuarios" >Usuarios</a>
-    <a href="#" [routerLink]="['/pedidos']" routerLinkActive="pedidos" >Pedidos</a>
     <router-outlet></router-outlet>
 
 </div>

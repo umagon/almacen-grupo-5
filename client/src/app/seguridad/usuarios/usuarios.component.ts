@@ -13,22 +13,21 @@ export class UsuariosComponent implements OnInit {
 	constructor(private usuarioService: UsuarioService) { }
 
 	ngOnInit() {
-		this.loading++;
-		this.usuarioService.getAll()
-		.pipe(finalize(()=>this.loading--))
-		.subscribe(usuarios => { this.usuarios = usuarios; });
+		this.cargarUsuarios();
 	}
 
 	borrarUsuario(_id: string) {
 		this.loading++;
 		this.usuarioService.delete(_id)
 		.pipe(finalize(()=>this.loading--))
-		.subscribe(() => { this.cargarUsuarios() });
+		.subscribe(() => { 
+			this.cargarUsuarios() });
 	}
 	cargarUsuarios() {
 		this.loading++;
 		this.usuarioService.getAll()
 		.pipe(finalize(()=>this.loading--))
-		.subscribe(usuarios => { this.usuarios = usuarios; });
+		.subscribe(usuarios => { 
+			this.usuarios = usuarios; });
 	}
 }
