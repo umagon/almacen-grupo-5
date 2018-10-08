@@ -15,10 +15,12 @@ service.delete = _delete;
 module.exports = service;
 
 function getAll() {
-  Producto.find({}, function(err, producto) {
-    if (err) res.send(err);
-    res.json(producto);
+  var deferred = Q.defer();
+  Producto.find({}, function(err, productos) {
+    if (err) deferred.reject(err.name + ': ' + err.message);
+    deferred.resolve(productos);
   });
+  return deferred.promise;
 }
 
 function create(productParams) {
@@ -42,13 +44,6 @@ function create(productParams) {
   return deferred.promise;
 }
 
-function read_a_producto() {
-  Producto.findById(req.params.productoId, function(err, producto) {
-    if (err) res.send(err);
-    res.json(producto);
-  });
-}
-
 function update() {
   Producto.findOneAndUpdate(
     { _id: req.params.productoId },
@@ -61,14 +56,12 @@ function update() {
   );
 }
 
-function _delete() {
-  Producto.remove(
-    {
-      _id: req.params.productoId
-    },
-    function(err, producto) {
-      if (err) res.send(err);
-      res.json({ message: 'Producto successfully deleted' });
-    }
-  );
+function _delete(id) {
+  var deferred = Q.defer();
+  console.log(id);
+  Producto.remove({ _id: id }, function(err) {
+    if (err) deferred.reject(err.name + ': ' + err.message);
+    deferred.resolve();
+  });
+  return deferred.promise;
 }

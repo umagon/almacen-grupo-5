@@ -4,10 +4,10 @@ var productService = require('../services/products.service');
 var express = require('express');
 var router = express.Router();
 
-router.post('/', create);
 router.get('/', getAll);
+router.delete('/:id', _delete);
+router.post('/', create);
 router.put('/:_id', update);
-router.delete('/:_id', _delete);
 
 module.exports = router;
 

@@ -9,7 +9,7 @@ describe('Server product test', function() {
     password: 'asd'
   };
   var productTest = {
-    nombre: 'Seven Up',
+    nombre: 'Sprite',
     descripcion: 'Gaseosa sabor limón',
     stock: 200,
     stockLimite: 50,
@@ -55,26 +55,51 @@ describe('Server product test', function() {
     });
   });
 
-  describe('Create', function() {
+  describe('Get all', function() {
     var data = {};
-    var url = base_url + 'products';
+    var url = base_url + 'products/';
     var params = {
       url: url,
-      form: productTest,
       headers: {
         authorization: 'Bearer ' + tokenSession
       }
     };
     beforeAll(done => {
-      request.post(params, (error, response, body) => {
+      request.get(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
         done();
       });
     });
-    it('Create', () => {
-      console.log('Create');
+    it('Get all', () => {
+      var productos = JSON.parse(data.body);
+      productTest = productos.find(function(producto) {
+        return producto.nombre === 'Sprite';
+      });
+      expect(data.status).toBe(200);
+    });
+  });
+
+  describe('Delete', function() {
+    var data = {};
+    beforeAll(done => {
+      var url = base_url + 'products/' + productTest._id;
+      var params = {
+        url: url,
+        headers: {
+          authorization: 'Bearer ' + tokenSession
+        }
+      };
+      request.delete(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Status code 200', () => {
+      console.log('Delete');
       console.log(data.body);
+      console.log(url);
       expect(data.status).toBe(200);
     });
   });

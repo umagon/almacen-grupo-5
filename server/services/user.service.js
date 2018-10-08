@@ -155,9 +155,7 @@ function _delete(id) {
   console.log(id);
   Usuario.remove({ _id: id }, function(err) {
     if (err) deferred.reject(err.name + ': ' + err.message);
-
     deferred.resolve();
   });
-
   return deferred.promise;
 }

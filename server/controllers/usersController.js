@@ -6,11 +6,12 @@ var express = require('express');
 var router = express.Router();
 
 router.post('/', authenticate);
+router.delete('/:_id', _delete);
 router.post('/register', register);
 router.get('/', getAll);
+
 router.get('/current', getCurrent);
 router.put('/:_id', update);
-router.delete('/:_id', _delete);
 
 module.exports = router;
 
