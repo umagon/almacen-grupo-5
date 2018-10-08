@@ -8,10 +8,10 @@
 		<th></th>
 	</tr>
 	<tr *ngFor="let pedido of pedidos">
-		<td [title]="pedido.compra?.descripcion">{{pedido.compra?.nombre}}</td>
+		<td [title]="pedido.compra?.descripcion">{{pedido.compra?.numeroCompra}}</td>
 		<td>{{pedido.compra?.producto?.nombre}}</td>
-		<td>{{pedido.compra?.fechaCompra}}</td>
-		<td>{{pedido.compra?.fechaEntrega}}</td>
+		<td>{{pedido.fechaCompra | date: 'dd/MM/yyyy'}}</td>
+		<td>{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
 		<td>
 			<button type="button" class="btn btn-danger" (click)="borrar(pedido._id)">Borrar</button>
 		</td>

@@ -19,9 +19,7 @@ var PedidoSchema = new Schema({
     cantidad: Number,
     descripcion: String
   },
-  estado: {
-    type: [{ type: String, enum: ['Pendiente', 'Enviado', 'Entregado'] }]
-  },
+  estado: String,
   cantidad: Number,
   fechaCompra: Date,
   fechaEntrega: Date

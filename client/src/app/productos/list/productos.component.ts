@@ -12,6 +12,7 @@ export class ProductosComponent implements OnInit {
 
 	productoActual;
 	productos;
+	copy = Object.assign;
 	constructor(private productoService: ProductosService) {
 	}
 

@@ -22,12 +22,12 @@ export class ProductoComponent {
 		const obs = this.model._id? this.usuarioService.update(this.model): this.usuarioService.create(this.model);
 		obs.subscribe(
 				data => {
-					this.alertService.success('Producto creado', true);
+					this.alertService.success('Producto creado');
 					this.modelChange.emit(null);
 					this.exito.emit(this.model);
 				},
 				error => {
-					this.alertService.error(error);
+					this.alertService.error(error.message);
 					this.loading = false;
 				});
 	}
