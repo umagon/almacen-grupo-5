@@ -21,24 +21,25 @@ function getAll() {
   });
 }
 
-function create() {
+function create(productParams) {
   var deferred = Q.defer();
-  Proudcto.findOne({ _id: product._id }, function(err, product) {
+  Producto.findOne({ nombre: productParams.nombre }, function(err, product) {
     if (err) deferred.reject(err.name + ': ' + err.message);
     if (product) {
-      deferred.reject('Producto con "' + productParams._id + '" ya existe.');
+      deferred.reject('Producto "' + productParams.nombre + '" ya existe.');
     } else {
       createProduct(productParams);
     }
   });
-}
 
-function createProduct(product) {
-  var new_producto = new Producto(req.body);
-  new_producto.save(function(err, producto) {
-    if (err) res.send(err);
-    res.json(producto);
-  });
+  function createProduct(product) {
+    var new_producto = new Producto(product);
+    new_producto.save(function(err, producto) {
+      if (err) deferred.reject(err.name + ': ' + err.message);
+      deferred.resolve();
+    });
+  }
+  return deferred.promise;
 }
 
 function read_a_producto() {

@@ -71,14 +71,9 @@ function getById(_id) {
 
 function create(userParam) {
   var deferred = Q.defer();
-
-  console.log(userParam);
-  // validation
   Usuario.findOne({ username: userParam.username }, function(err, user) {
     if (err) deferred.reject(err.name + ': ' + err.message);
-
     if (user) {
-      // username already exists
       deferred.reject('Username "' + userParam.username + '" is already taken');
     } else {
       createUser(userParam);
@@ -87,15 +82,13 @@ function create(userParam) {
 
   function createUser(user) {
     user.password = bcrypt.hashSync(userParam.password, 10);
-    console.log('llega?');
-    var asd = new Usuario({
+    var myUser = new Usuario({
       username: user.username,
       password: user.password,
       perfil: user.perfil,
       isBorrado: user.isBorrado
     });
-    console.log(asd);
-    asd.save(function(err, usuario) {
+    myUser.save(function(err, usuario) {
       if (err) deferred.reject(err.name + ': ' + err.message);
       deferred.resolve();
     });

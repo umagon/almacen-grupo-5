@@ -15,7 +15,7 @@ function create(req, res) {
   productService
     .create(req.body)
     .then(function() {
-      res.json('User created!');
+      res.json('Product created!');
     })
     .catch(function(err) {
       res.status(400).send(err);
