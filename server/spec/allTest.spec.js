@@ -284,7 +284,6 @@ describe('Almacen Test', function() {
     });
   });
 
-  /*
   describe('Crear pedido de prueba', function() {
     var data = {};
     beforeAll(done => {
@@ -378,7 +377,6 @@ describe('Almacen Test', function() {
       expect(data.status).toBe(200);
     });
   });
-  */
 
   describe('Usuarios', function() {
     var data = {};
