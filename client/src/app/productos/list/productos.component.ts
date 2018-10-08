@@ -19,9 +19,8 @@ export class ProductosComponent implements OnInit {
 
 		this.loading++;
 		this.productoService.getAll().pipe(
-			tap(prods => this.productos = prods),
 			finalize(() => this.loading--)
-		);
+		).subscribe(prods => this.productos = prods);
 	}
 
 }

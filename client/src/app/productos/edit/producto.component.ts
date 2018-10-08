@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ProductosService } from '../productos.service';
 import { AlertService } from '../../alert/alert.service';
-import { EventEmitter } from 'protractor';
 
 @Component({
 	selector: 'app-producto',
