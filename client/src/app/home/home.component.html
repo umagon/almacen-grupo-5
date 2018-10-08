@@ -2,11 +2,4 @@
     <div class="jumbotron">
         <h2>Bienvenido a la plataforma de Almacen</h2>
     </div>
-    <h3>Usuarios registrados</h3>
-    <ul>
-        <li *ngFor="let usuario of usuarios">
-            {{usuario.username}}
-            - <button type="button" class="btn btn-danger" (click)="borrarUsuario(usuario._id)">Delete</button>
-        </li>
-    </ul>
 </div>
