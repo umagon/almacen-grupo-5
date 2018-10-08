@@ -1,7 +1,12 @@
 ﻿<div class="col-md-6 col-md-offset-3">
     <div class="jumbotron">
         <h2>Bienvenido a la plataforma de Almacen</h2>
+        
+        Qué desea hacer?
+        <a href="#" [routerLink]="['/productos']" routerLinkActive="productos" >Productos</a>
     </div>
+
+    <br><br><br><br>
     <h3>Usuarios registrados</h3>
     <ul>
         <li *ngFor="let usuario of usuarios">
