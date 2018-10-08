@@ -5,7 +5,7 @@ describe('Almacen Test', function() {
   var server;
   var tokenSession = '';
   var userTest = {
-    username: 'Pepe',
+    username: 'Max',
     password: 'asd',
     perfil: 'user',
     isBorrado: false
@@ -42,8 +42,8 @@ describe('Almacen Test', function() {
     },
     estado: 'Pendiente',
     cantidad: 1,
-    fechaCompra: 1,
-    fechaEntrega: 1
+    fechaCompra: new Date(),
+    fechaEntrega: null
   };
 
   beforeAll(function() {
@@ -53,7 +53,7 @@ describe('Almacen Test', function() {
   afterAll(() => {
     server.close();
   });
-  
+
   describe('Autenticación de usuario', function() {
     var data = {};
     var url = base_url + 'users/';
@@ -102,5 +102,4 @@ describe('Almacen Test', function() {
       expect(data.status).toBe(200);
     });
   });
-
-})
+});
