@@ -46,16 +46,35 @@ function create(orderParams) {
   return deferred.promise;
 }
 
-function update() {
-  Pedido.findOneAndUpdate(
-    { _id: req.params.orderoId },
-    req.body,
-    { new: true },
-    function(err, ordero) {
-      if (err) res.send(err);
-      res.json(ordero);
+function update(_id, orderParam) {
+  var deferred = Q.defer();
+  Pedido.findById(_id, function(err, order) {
+    if (err) deferred.reject(err.name + ': ' + err.message);
+    updateOrder(_id, orderParam);
+  });
+
+  function updateOrder(_id, orderParam) {
+    var set = {};
+    if (orderParam.estado) {
+      set.estado = orderParam.estado;
     }
-  );
+    if (orderParam.cantidad) {
+      set.cantidad = orderParam.cantidad;
+    }
+    if (orderParam.fechaEntrega) {
+      set.fechaEntrega = orderParam.fechaEntrega;
+    }
+
+    Pedido.findOneAndUpdate({ _id: _id }, set, { new: true }, function(
+      err,
+      pedido
+    ) {
+      if (err) deferred.reject(err.name + ': ' + err.message);
+      deferred.resolve();
+    });
+  }
+
+  return deferred.promise;
 }
 
 function _delete(id) {

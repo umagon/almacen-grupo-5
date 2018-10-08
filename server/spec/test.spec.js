@@ -40,6 +40,7 @@ describe('Almacen Test', function() {
       cantidad: 1,
       descripcion: 'Compra test'
     },
+    estado: 'Pendiente',
     cantidad: 1,
     fechaCompra: 1,
     fechaEntrega: 1
@@ -344,7 +345,6 @@ describe('Almacen Test', function() {
     it('Obtener todos los productos', () => {
       productos = JSON.parse(data.body);
       console.log('Obtener todos los productos.');
-      console.log(productos);
       expect(data.status).toBe(200);
     });
   });
@@ -417,6 +417,55 @@ describe('Almacen Test', function() {
     it('Verificación de duplicado', () => {
       console.log('Prohibir creación de producto duplicado.');
       expect(data.status).toBe(400);
+    });
+  });
+
+  describe('Obtener todos los pedidos', function() {
+    var data = {};
+    var url = base_url + 'orders/';
+    var params = {
+      url: url,
+      headers: {
+        authorization: 'Bearer ' + tokenSession
+      }
+    };
+    beforeAll(done => {
+      request.get(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Obtener todos los pedidos.', () => {
+      pedidos = JSON.parse(data.body);
+      console.log('Obtener todos los pedidos.');
+      expect(data.status).toBe(200);
+    });
+  });
+
+  describe('Actualización de pedido', function() {
+    var data = {};
+    beforeAll(done => {
+      orderTest = pedidos.find(function(pedido) {
+        return pedido.compra.numeroCompra === orderTest.compra.numeroCompra;
+      });
+      var url = base_url + 'orders/' + orderTest._id;
+      var params = {
+        url: url,
+        form: {
+          estado: 'Enviado',
+          cantidad: 999
+        }
+      };
+      request.put(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Actualización de pedido.', () => {
+      console.log('Actualización de pedido.');
+      expect(data.status).toBe(200);
     });
   });
 
