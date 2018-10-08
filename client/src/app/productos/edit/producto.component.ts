@@ -10,6 +10,7 @@ import { AlertService } from '../../alert/alert.service';
 export class ProductoComponent {
 	@Input() model;
 	@Output() modelChange = new EventEmitter();
+	@Output() exito = new EventEmitter();
 	loading = false;
 
 	constructor(
@@ -23,6 +24,7 @@ export class ProductoComponent {
 				data => {
 					this.alertService.success('Producto creado', true);
 					this.modelChange.emit(null);
+					this.exito.emit(this.model);
 				},
 				error => {
 					this.alertService.error(error);
