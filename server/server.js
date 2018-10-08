@@ -19,6 +19,7 @@ app.use(bodyParser.json());
 
 app.use('/users', require('./controllers/usersController'));
 app.use('/products', require('./controllers/productsController'));
+app.use('/orders', require('./controllers/ordersController'));
 
 app.use(
   expressJwt({
