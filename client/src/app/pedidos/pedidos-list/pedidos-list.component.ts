@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ProductosService } from '../../productos/productos.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { PedidosService } from '../pedidos.service';
 
 @Component({
   selector: 'pedidos-list',
@@ -9,15 +9,15 @@ import { ProductosService } from '../../productos/productos.service';
 export class PedidosListComponent implements OnInit {
 
   @Input() pedidos;
-  constructor(private productoService: ProductosService) { }
+  @Output() borrado = new EventEmitter();
+  constructor(private pedidoService: PedidosService) { }
 
   ngOnInit() {
   }
 
 	borrar(id){
-		this.productoService.delete(id).subscribe(x=>{
-			const i = this.pedidos.findIndex(x=>x._id == id);
-			if(i+1) this.pedidos.splice(i,1);
+		this.pedidoService.delete(id).subscribe(x=>{
+			this.borrado.emit(id);
 		});
 	}
 }

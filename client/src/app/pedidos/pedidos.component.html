@@ -5,13 +5,13 @@
 <div *ngIf="pedidos">
 	<p-accordion [multiple]="true">
 		<p-accordionTab header="Enviados" selected="true">
-			<pedidos-list [pedidos]="pedidosEnviados"></pedidos-list>
+			<pedidos-list [pedidos]="pedidosEnviados" (borrado)="cargarPedidos()"></pedidos-list>
 		</p-accordionTab>
 		<p-accordionTab header="Pendientes" selected="true">
-			<pedidos-list [pedidos]="pedidosPendientes"></pedidos-list>
+			<pedidos-list [pedidos]="pedidosPendientes" (borrado)="cargarPedidos()"></pedidos-list>
 		</p-accordionTab>
 		<p-accordionTab header="Entregados">
-			<pedidos-list [pedidos]="pedidosEntregados"></pedidos-list>
+			<pedidos-list [pedidos]="pedidosEntregados" (borrado)="cargarPedidos()"></pedidos-list>
 		</p-accordionTab>
 	</p-accordion>
 </div>

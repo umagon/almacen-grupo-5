@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductosService } from '../productos/productos.service';
 import { finalize } from 'rxjs/operators';
 import { PedidosService } from './pedidos.service';
 
@@ -25,6 +24,10 @@ export class PedidosComponent implements OnInit {
 
 
   ngOnInit() {
+    this.cargarPedidos();
+  }
+
+  cargarPedidos() {
 		this.loading++;
 		this.pedidosService.getAll().pipe(
 			finalize(() => this.loading--)
