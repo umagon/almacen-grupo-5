@@ -18,8 +18,8 @@ export class ProductoComponent {
 
 	crear() {
 		this.loading = true;
-		this.usuarioService.create(this.model)
-			.subscribe(
+		const obs = this.model._id? this.usuarioService.update(this.model): this.usuarioService.create(this.model);
+		obs.subscribe(
 				data => {
 					this.alertService.success('Producto creado', true);
 					this.modelChange.emit(null);
