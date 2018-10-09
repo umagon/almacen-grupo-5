@@ -4,9 +4,13 @@
 @import "~primeng/resources/themes/nova-light/theme.css";
 
 @import '~node_modules/bootstrap/scss/bootstrap';
-@import '~node_modules/bootstrap/scss/bootstrap-grid';
 
 
 .btn{
     margin-left: 5px;
+}
+
+body{
+    background: url('img/almacen.jpg') no-repeat;
+    background-size: 100%;
 }

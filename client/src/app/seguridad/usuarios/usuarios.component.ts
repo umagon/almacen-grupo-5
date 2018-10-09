@@ -30,4 +30,8 @@ export class UsuariosComponent implements OnInit {
 		.subscribe(usuarios => { 
 			this.usuarios = usuarios; });
 	}
+
+	nombreApellido(u){
+		return [u.nombre,u.apellido].filter(x=>x).join(',');
+	}
 }

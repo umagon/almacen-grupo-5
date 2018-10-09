@@ -5,7 +5,7 @@ describe('Almacen Test', function() {
   var server;
   var tokenSession = '';
   var userTest = {
-    username: 'Max',
+    username: 'Pepe',
     password: 'asd',
     perfil: 'user',
     isBorrado: false
@@ -102,4 +102,103 @@ describe('Almacen Test', function() {
       expect(data.status).toBe(200);
     });
   });
+
+
+
+
+
+  describe('Crear pedido de prueba', function() {
+    var data = {};
+    beforeAll(done => {
+      orderTest = {
+        compra: {
+          numeroCompra: 12,
+          producto: {
+            nombre: 'Coca-cola',
+            descripcion: 'Gaseosa sabor cola',
+            stock: 200,
+            stockLimite: 50,
+            isBorrado: false,
+            proveedor: {
+              nombre: 'Coca-Cola Company',
+              email: 'company@cocacola.com'
+            }
+          },
+          cantidad: 1,
+          descripcion: 'Compra test'
+        },
+        estado: 'Entregado',
+        cantidad: 1,
+        fechaCompra: new Date("2018-01-01"),
+        fechaEntrega: new Date("2018-01-06")
+      };
+      var url = base_url + 'orders';
+      var params = {
+        url: url,
+        form: orderTest,
+        headers: {
+          authorization: 'Bearer ' + tokenSession
+        }
+      };
+      request.post(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Creación de producto de prueba', () => {
+      console.log('Creación de producto de prueba.');
+      expect(data.status).toBe(200);
+    });
+  });
+
+
+
+  
+
+  describe('Crear pedido de prueba', function() {
+    var data = {};
+    beforeAll(done => {
+      orderTest = {
+        compra: {
+          numeroCompra: 39,
+          producto: {
+            nombre: 'Coca-cola',
+            descripcion: 'Gaseosa sabor cola',
+            stock: 200,
+            stockLimite: 50,
+            isBorrado: false,
+            proveedor: {
+              nombre: 'Coca-Cola Company',
+              email: 'company@cocacola.com'
+            }
+          },
+          cantidad: 1,
+          descripcion: 'Compra test'
+        },
+        estado: 'Enviado',
+        cantidad: 1,
+        fechaCompra: new Date("2018-10-07"),
+        fechaEntrega: null
+      };
+      var url = base_url + 'orders';
+      var params = {
+        url: url,
+        form: orderTest,
+        headers: {
+          authorization: 'Bearer ' + tokenSession
+        }
+      };
+      request.post(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Creación de producto de prueba', () => {
+      console.log('Creación de producto de prueba.');
+      expect(data.status).toBe(200);
+    });
+  });
 });
+
