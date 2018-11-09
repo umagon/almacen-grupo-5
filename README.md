@@ -8,46 +8,46 @@ Aplicación encargada de administrar el stock, las compras realizadas y pedidos 
 
 Se divide en almacenApp y beAlmacen.
 
-### almacenApp
+### client
 
-Aplicación frontEnd en Angular, cuyo objetivo es permitir administrar usuarios, administrar el stock y los pedidos del negocio.
+Aplicación frontEnd (Angular + Bootstrap), cuyo objetivo es permitir administrar usuarios, administrar el stock y los pedidos del negocio.
 Se complementa consumiendo servicios de el beAlmacen.
 
-## beAlmacen
+## server
 
-Aplicación BackEnd destinada a alimentar a los distintos clientes con datos del negocio.
+Aplicación BackEnd (Node.js + Jasmine + MongoDB + Express) destinada a brindar servicios para los distintos clientes del negocio.
 Ofrece interfaces para almacenApp, LOGISTICA y TIENDA.
 
+## Comandos para correr la aplicación
+
+Se debe correr el server primero - 'npm start' desde la raíz del server.
+Luego el cliente - 'ng serve' desde raíz del cliente.
+
+Para probar los test - 'npm test' desde raíz del server.
 
 ## Models
 
 ### Usuario
 
-- userName
-- password
-- perfil
-- isBorrado
+-producto
+-cantidad
+-precio
+-fechaCompra
+-fechaEntrega
 
 ### Productos
 
-- nombre
-- descripcion
-- stock
-- stockLimite
-- isBorrado
-- proveedor - nombre - email
-
-### Compras
-
-- producto - nombre - descripcion
-- cantidad
-- precio
-- fechaCompra
-- fechaEntrega
+-nombre
+-descripcion
+-stock
+-stockLimite
+-isBorrado
+-proveedor
 
 ### Pedidos
 
-- producto - nombre - descripcion
-- cantidad
-- fechaCompra
-- fechaEntrega
+-compra
+-estado
+-cantidad
+-fechaCompra
+-fechaEntrega

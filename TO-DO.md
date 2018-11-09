@@ -1,13 +1,13 @@
 # TO-DO
 
-#1 - Crear los proyectos
-
-Tomar los ejemplos de MEANS/LoginExample
-Ahí está la aplicación client/server, si queres probala (npm i en cada folder)
-Agregar Karma/Jasmine al proyecto
-Crear los .spec.ts en las folder que correspondan (todo lugar donde haya un .ts)
-Traducir los usuarios!!! HDP HACEME CASO :3
-Una vez que funque todo esto, agregas tus modulos y armas los servicios
-Después queda agregar componentes (de acuerdo a la imagen de tu pizarrón - la copio acá puto)
-Para las tablas, tomar el ejemplo de MEANS/ABMExample, que tiene un ABM muy copado, super fácil.
-TODO TIENE MONGO, NO TENES QUE TOCAR NADA DE ESO!!!!
+1- Agregar envío de mail a "proveedor", verificar con documentación.
+2- Agregar servicios para módulo de Compras
+3- Dejar en FTP (agregar módulo correspondiente) los archivos .json con los pedidos para el módulo de Logística (ver Drive compartido, json definido)
+4- Separar el archivo de spec (el de test jasmine) en distintos scopes con las distintas pruebas, agregar los que faltan (faltan varios).
+5- Agregar Test Unitario de Front!
+6- Verificar los nombres del front, hay duplicados en distintos archivos
+7- Completar las funcionalidades del front/back.
+8- Acomodar las tarjetas de trello (agregar las que faltan)
+9- Agregar todos los casos de prueba
+10- Discriminar criticidad
+11- Definir criterios de aceptación
