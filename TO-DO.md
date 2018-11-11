@@ -36,9 +36,7 @@ Back:
 					}
 				}
 			- Response: ?
-		- informarPedidosEntregados: recibe un JSON de los pedidos que ya fueron entregados.
-			- 
-	- Hacer un cron que diariamente deje un archivo .json 
+	- Hacer un cron que diariamente deje un archivo "ordenes-DDMMYYYY.json" y recupere un archivo "delivered-YYYY-MM-DD.json".
 
 - Acomodar las tarjetas de trello.
 	Basarse en las funcionalidades ya hechas para hacer las faltantes, que serían los métodos HTTP de la integración (con Logistica, que es uno, y con Almacen, que son 2, uno de consulta de stock de un producto y otro que registra una compra)
