@@ -41,8 +41,8 @@ ftpLogistica.on('ready', function() {
   });
 });
 
-ftpAlmacen.connect({ host: config.ftpAlmacen, user: 'grupo5', password: 'grupo5' });
-ftpLogistica.connect({ host: config.ftpLogistica, user: 'sgesnouin', password: 'Martes38*t' });
+ftpAlmacen.connect({ host: config.ftpAlmacen, user: config.ftpLogistica.user, password: config.ftpLogistica.password });
+ftpLogistica.connect({ host: config.ftpLogistica, user: config.ftpLogistica.user, password: config.ftpLogistica.user });
 
 
 //var port = process.env.NODE_ENV === 'production' ? 80 : 4000;

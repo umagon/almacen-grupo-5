@@ -12,7 +12,7 @@ var PedidoSchema = new Schema({
     cliente: {
       nombre: String,
       apellido: String,
-      mail: String,
+      email: String,
       direccion: String
     }
   },

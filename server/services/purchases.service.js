@@ -21,7 +21,7 @@ function crearPedido(compra) {
     .updateStock(
       compra.Producto.codBarra,
       compra.Producto.cantidad,
-      compra.Cliente.mail
+      compra.Cliente.email
     )
     .then(function(peso) {
       pedido.peso_total = peso;

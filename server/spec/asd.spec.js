@@ -35,7 +35,7 @@ describe('Almacen Test', function() {
       cliente: {
         nombre: 'Juan',
         apellido: 'Perez',
-        mail: 'juanperez@mail.com',
+        email: 'juanperez@mail.com',
         direccion: 'calle 123'
       }
     },
@@ -129,7 +129,7 @@ describe('Almacen Test', function() {
           cliente: {
             nombre: 'Pablo',
             apellido: 'Gomez',
-            mail: 'pablogomez@mail.com',
+            email: 'pablogomez@mail.com',
             direccion: 'Calle 23'
           }
         },
@@ -167,7 +167,7 @@ describe('Almacen Test', function() {
           cliente: {
             nombre: 'Pablo',
             apellido: 'Gomez',
-            mail: 'pablogomez@mail.com',
+            email: 'pablogomez@mail.com',
             direccion: 'Calle 23'
           }
         },

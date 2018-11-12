@@ -97,7 +97,7 @@ function update(_id, productParam) {
   return deferred.promise;
 }
 
-function updateStock(codBarra, cantidad, mail) {
+function updateStock(codBarra, cantidad, email) {
   var deferred = Q.defer();
 
   Producto.findOne({ codBarra: codBarra }, function(err, product) {
@@ -107,7 +107,7 @@ function updateStock(codBarra, cantidad, mail) {
 
     if (product.stock >= cantidad) {
       if (product.stock - cantidad < product.stockLimite) {
-        mailService.enviarMail(mail);
+        mailService.enviarMail(email);
       }
       updateProduct(product._id, product.stock - cantidad, peso);
     } else {

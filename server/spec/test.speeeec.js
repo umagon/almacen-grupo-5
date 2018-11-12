@@ -36,7 +36,7 @@ describe('Almacen Test', function() {
       cliente: {
         nombre: 'Juan',
         apellido: 'Perez',
-        mail: 'juanperez@mail.com',
+        email: 'juanperez@mail.com',
         direccion: 'calle 123'
       }
     },
