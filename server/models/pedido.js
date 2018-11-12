@@ -16,6 +16,7 @@ var PedidoSchema = new Schema({
       direccion: String
     }
   },
+  peso_total: Number,
   estado: String,
   fechaCompra: Date,
   fechaEntrega: Date

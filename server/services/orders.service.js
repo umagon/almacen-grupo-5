@@ -43,7 +43,17 @@ function create(orderParams) {
         'Pedido "' + orderParams.compra.nro_orden + '" ya existe.'
       );
     } else {
-      createOrder(orderParams);
+      Producto.findOne({ codBarra: codBarra }, function(err, product) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+        console.log('ASDSAD333');
+        console.log(orderParams);
+
+        orderParams.peso_total =
+          product.peso * orderParams.compra.producto.cantidad;
+        console.log('ASDSAD444');
+        console.log(orderParams);
+        createOrder(orderParams);
+      });
     }
   });
 
@@ -92,12 +102,14 @@ function updateList(ordersIds, estado) {
   var set = {};
   set.estado = estado;
   ordersIds.forEach(orderId => {
-    Pedido.findOneAndUpdate({ "compra.nro_orden": ''+orderId }, set, { new: true }, function(
-      err,
-      pedido
-    ) {
-      if (err) console.log(err);
-    });
+    Pedido.findOneAndUpdate(
+      { 'compra.nro_orden': '' + orderId },
+      set,
+      { new: true },
+      function(err, pedido) {
+        if (err) console.log(err);
+      }
+    );
   });
 }
 

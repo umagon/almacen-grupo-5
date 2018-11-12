@@ -20,7 +20,7 @@ function crearPedido(compra) {
       compra.producto.codBarra,
       compra.producto.cantidad,
       compra.cliente.mail,
-      pedido.compra.peso_total
+      pedido.peso_total
     )
     .then(function() {
       console.log('ASDSAD');
@@ -42,6 +42,6 @@ function compraToPedido(compra) {
   pedido.compra = compra;
   pedido.estado = 'Pendiente';
   pedido.fechaCompra = new Date();
-  pedido.compra.peso_total = 0;
+  pedido.peso_total = 0;
   return pedido;
 }
