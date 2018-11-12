@@ -58,107 +58,89 @@ describe('Almacen Test', function() {
       url: url,
       form: userTest
     };
-    beforeAll(done => {
+    it('Creación de usuario de prueba', done => {
       request.post(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+        console.log('Creación de usuario de prueba');
+        expect(data.status).toBe(200);
         done();
       });
     });
-    it('Creación de usuario de prueba', () => {
-      console.log('Creación de usuario de prueba');
-      expect(data.status).toBe(200);
-    });
-  });
 
-  describe('Usuarios', function() {
-    var data = {};
-    var url = base_url + 'users/';
-    var params = {
+    data = {};
+    url = base_url + 'users/';
+    params = {
       url: url,
       form: userTest
     };
-    beforeAll(done => {
+
+    it('Creación de usuario de prueba', done => {
       request.post(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+        console.log('Creación de usuario de prueba');
+        expect(data.status).toBe(200);
         done();
       });
     });
-    it('Creación de usuario de prueba', () => {
-      console.log('Creación de usuario de prueba');
-      expect(data.status).toBe(200);
-    });
-  });
 
-  describe('Autenticación de usuario', function() {
-    var data = {};
-    var url = base_url + 'users/';
-    var params = {
+    url = base_url + 'users/';
+    params = {
       url: url,
       form: {
         username: '',
         password: ''
       }
     };
-    beforeAll(done => {
+
+    it('Autenticación de usuario incorrecto.', done => {
       request.post(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+        console.log('Autenticación de usuario incorrecto.');
+        expect(data.status).toBe(400);
         done();
       });
     });
-    it('Autenticación de usuario incorrecto.', () => {
-      console.log('Autenticación de usuario incorrecto.');
-      expect(data.status).toBe(400);
-    });
-  });
 
-  describe('Autenticación de usuario', function() {
-    var data = {};
-    var url = base_url + 'users/';
-    var params = {
+    url = base_url + 'users/';
+    params = {
       url: url,
       form: {
         username: userTest.username,
         password: userTest.password
       }
     };
-    beforeAll(done => {
+
+    it('Autenticación de usuario.', done => {
       request.post(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+
+        tokenSession = JSON.parse(data.body).token;
+        userTest.perfil = JSON.parse(data.body).perfil;
+        userTest._id = JSON.parse(data.body)._id;
+        console.log('Autenticación de usuario.');
+        expect(data.status).toBe(200);
         done();
       });
     });
-    it('Autenticación de usuario.', () => {
-      tokenSession = JSON.parse(data.body).token;
-      userTest.perfil = JSON.parse(data.body).perfil;
-      userTest._id = JSON.parse(data.body)._id;
-      console.log('Autenticación de usuario.');
-      expect(data.status).toBe(200);
-    });
-  });
 
-  describe('Usuarios', function() {
-    var data = {};
-    beforeAll(done => {
-      var url = base_url + 'users/' + 'IDNOEXISTENTE';
-      var params = {
-        url: url,
-        headers: {
-          authorization: 'Bearer ' + tokenSession
-        }
-      };
+    url = base_url + 'users/' + 'IDNOEXISTENTE';
+    params = {
+      url: url
+    };
+
+    it('Borrar usuario de prueba no existente.', () => {
       request.delete(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+
+        console.log('Borrar usuario de prueba no existente.');
+        expect(data.status).toBe(400);
         done();
       });
-    });
-    it('Borrar usuario de prueba no existente.', () => {
-      console.log('Borrar usuario de prueba no existente.');
-      expect(data.status).toBe(400);
     });
   });
 
