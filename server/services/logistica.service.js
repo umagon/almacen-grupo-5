@@ -17,8 +17,8 @@ function obtenerPedidosEntregados(ftpClient) {
     MM = hoy.getMonth() + 1,
     YYYY = hoy.getFullYear();
 
-  console.log('Obteniendo pedidos entregados... buscando '+ `${PATH}/ordenes-${DD}${MM}${YYYY}.json`);
-  ftpClient.get(`${PATH}/ordenes-${DD}${MM}${YYYY}.json`, function(err, stream) {
+  console.log('Obteniendo pedidos entregados... buscando '+ `${PATH}/delivered-${YYYY}-${MM}-${DD}.json`);
+  ftpClient.get(`${PATH}/delivered-${YYYY}-${MM}-${DD}.json`, function(err, stream) {
     if (err) return console.error('zero results');
 
     stream.once('close', function() {
@@ -51,7 +51,7 @@ function subirPedidosAEntregar(ftpClient) {
       MM = hoy.getMonth() + 1,
       YYYY = hoy.getFullYear();
 
-    ftpClient.put(buf, `${PATH}/ordenes-${YYYY}-${MM}-${DD}.json`, function(err) {
+    ftpClient.put(buf, `${PATH}/ordenes-${DD}${MM}${YYYY}.json`, function(err) {
       if (err) return console.error('zero results');
       ftpClient.end();
     });

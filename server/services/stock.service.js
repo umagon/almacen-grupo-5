@@ -25,4 +25,5 @@ function getStock(_id) {
     if (err) deferred.reject(err.name + ': ' + err.message);
     deferred.resolve(producto);
   });
+  return deferred.promise;
 }

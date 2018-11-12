@@ -12,21 +12,21 @@ describe('Almacen Test', function() {
   };
   var productos = [];
   var productTest = {
-    nombre: 'Producto Test',
-    codBarra: 1234,
-    descripcion: 'Producto de Test',
-    stock: 200,
-    stockLimite: 50,
+    nombre: 'Coca-cola',
+    codBarra: 33,
+    descripcion: 'Gaseosa',
+    stock: 150,
+    stockLimite: 30,
     isBorrado: false,
     proveedor: {
-      nombre: 'Test',
-      email: 'test@test.com'
+      nombre: 'Coca-Cola Company',
+      email: 'cocacola@mail.com'
     }
   };
   var pedidos = [];
   var orderTest = {
     compra: {
-      numeroCompra: 45,
+      nro_orden: 45,
       producto: {
         codBarra: 1234,
         cantidad: 12
@@ -102,7 +102,7 @@ describe('Almacen Test', function() {
     beforeAll(done => {
       orderTest = {
         compra: {
-          numeroCompra: 12,
+          nro_orden: 12,
           producto: {
             codBarra: 1234,
             cantidad: 5
@@ -140,7 +140,7 @@ describe('Almacen Test', function() {
     beforeAll(done => {
       orderTest = {
         compra: {
-          numeroCompra: 39,
+          nro_orden: 39,
           producto: {
             codBarra: 1234,
             cantidad: 5
@@ -169,6 +169,29 @@ describe('Almacen Test', function() {
     });
     it('Creación de pedido de prueba 3', () => {
       console.log('Creación de pedido de prueba 3.');
+      expect(data.status).toBe(200);
+    });
+  });
+
+  describe('Productos', function() {
+    var data = {};
+    var url = base_url + 'products';
+    var params = {
+      url: url,
+      form: productTest,
+      headers: {
+        authorization: 'Bearer ' + tokenSession
+      }
+    };
+    beforeAll(done => {
+      request.post(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        done();
+      });
+    });
+    it('Crear producto de prueba', () => {
+      console.log('Crear producto de prueba.');
       expect(data.status).toBe(200);
     });
   });
