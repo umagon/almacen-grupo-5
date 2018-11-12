@@ -18,6 +18,7 @@ describe('Almacen Test', function() {
     descripcion: 'Producto de Test',
     stock: 200,
     stockLimite: 50,
+    peso: 1.5,
     isBorrado: false,
     proveedor: {
       nombre: 'Test',

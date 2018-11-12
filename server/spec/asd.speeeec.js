@@ -18,6 +18,7 @@ describe('Almacen Test', function() {
     stock: 150,
     stockLimite: 30,
     isBorrado: false,
+    peso: 1.5,
     proveedor: {
       nombre: 'Coca-Cola Company',
       email: 'cocacola@mail.com'
