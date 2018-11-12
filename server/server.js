@@ -7,6 +7,8 @@ var expressJwt = require('express-jwt');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const db = require('./config/db');
+const cron = require('node-cron');
+const logisticaService = require('./services/logistica.service');
 
 const app = express();
 
@@ -22,6 +24,14 @@ app.use('/products', require('./controllers/productsController'));
 app.use('/orders', require('./controllers/ordersController'));
 app.use('/getStock', require('./controllers/stockController'));
 app.use('/enviarCompra', require('./controllers/purchasesController'));
+
+
+let upload = false;
+cron.schedule('*/5 * * * * *', () => {
+  if(upload=!upload) logisticaService.obtenerPedidosEntregados();
+  else logisticaService.subirPedidosAEntregar();
+});
+
 
 //var port = process.env.NODE_ENV === 'production' ? 80 : 4000;
 var server = app.listen(config.serverPort, function() {
