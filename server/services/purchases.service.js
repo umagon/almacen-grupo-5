@@ -28,7 +28,7 @@ function crearPedido(compra) {
       });
     })
     .catch(function(err) {
-      res.status(400).send(err);
+      deferred.reject(err);
     });
 
   return deferred.promise;

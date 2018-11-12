@@ -26,7 +26,7 @@ describe('Almacen Test', function() {
   var pedidos = [];
   var orderTest = {
     compra: {
-      numeroCompra: 45,
+      nro_orden: 45,
       producto: {
         codBarra: 1234,
         cantidad: 12
@@ -102,7 +102,7 @@ describe('Almacen Test', function() {
     beforeAll(done => {
       orderTest = {
         compra: {
-          numeroCompra: 12,
+          nro_orden: 12,
           producto: {
             codBarra: 1234,
             cantidad: 5
@@ -140,7 +140,7 @@ describe('Almacen Test', function() {
     beforeAll(done => {
       orderTest = {
         compra: {
-          numeroCompra: 39,
+          nro_orden: 39,
           producto: {
             codBarra: 1234,
             cantidad: 5

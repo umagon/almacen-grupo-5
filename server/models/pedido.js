@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 
 var PedidoSchema = new Schema({
   compra: {
-    numeroCompra: Number,
+    nro_orden: Number,
     producto: {
       codBarra: String,
       cantidad: Number

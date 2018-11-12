@@ -33,19 +33,19 @@ function getAll() {
 
 function create(orderParams) {
   var deferred = Q.defer();
-  Pedido.findOne(
-    { 'compra.numeroCompra': orderParams.compra.numeroCompra },
-    function(err, order) {
-      if (err) deferred.reject(err.name + ': ' + err.message);
-      if (order) {
-        deferred.reject(
-          'Pedido "' + orderParams.compra.numeroCompra + '" ya existe.'
-        );
-      } else {
-        createOrder(orderParams);
-      }
+  Pedido.findOne({ 'compra.nro_orden': orderParams.compra.nro_orden }, function(
+    err,
+    order
+  ) {
+    if (err) deferred.reject(err.name + ': ' + err.message);
+    if (order) {
+      deferred.reject(
+        'Pedido "' + orderParams.compra.nro_orden + '" ya existe.'
+      );
+    } else {
+      createOrder(orderParams);
     }
-  );
+  });
 
   function createOrder(order) {
     var new_order = new Pedido(order);

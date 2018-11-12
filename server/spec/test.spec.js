@@ -26,7 +26,7 @@ describe('Almacen Test', function() {
   var pedidos = [];
   var orderTest = {
     compra: {
-      numeroCompra: 32,
+      nro_orden: 32,
       producto: {
         codBarra: 1234,
         cantidad: 12
@@ -444,7 +444,7 @@ describe('Almacen Test', function() {
     var data = {};
     beforeAll(done => {
       orderTest = pedidos.find(function(pedido) {
-        return pedido.compra.numeroCompra === orderTest.compra.numeroCompra;
+        return pedido.compra.nro_orden === orderTest.compra.nro_orden;
       });
       var url = base_url + 'orders/' + orderTest._id;
       var params = {
@@ -493,7 +493,7 @@ describe('Almacen Test', function() {
     var data = {};
     beforeAll(done => {
       orderTest = pedidos.find(function(pedido) {
-        return pedido.compra.numeroCompra === orderTest.compra.numeroCompra;
+        return pedido.compra.nro_orden === orderTest.compra.nro_orden;
       });
       var url = base_url + 'orders/' + orderTest._id;
       var params = {

@@ -1,19 +1,21 @@
 <p *ngIf="!pedidos.length">No hay pedidos</p>
 <table class="table" *ngIf="pedidos.length">
-	<tr>
-		<th>N° Compra</th>
-		<th>Producto</th>
-		<th>Comprado</th>
-		<th>Entregado</th>
-		<th></th>
-	</tr>
-	<tr *ngFor="let pedido of pedidos">
-		<td [title]="pedido.compra?.descripcion">{{pedido.compra?.numeroCompra}}</td>
-		<td>{{pedido.compra?.producto?.nombre}}</td>
-		<td>{{pedido.fechaCompra | date: 'dd/MM/yyyy'}}</td>
-		<td>{{pedido.fechaEntrega | date: 'dd/MM/yyyy'}}</td>
-		<td>
-			<button type="button" class="btn btn-danger" (click)="borrar(pedido._id)">Borrar</button>
-		</td>
-	</tr>
+  <tr>
+    <th>N° Compra</th>
+    <th>Producto</th>
+    <th>Comprado</th>
+    <th>Entregado</th>
+    <th></th>
+  </tr>
+  <tr *ngFor="let pedido of pedidos">
+    <td [title]="pedido.compra?.descripcion">{{ pedido.compra?.nro_orden }}</td>
+    <td>{{ pedido.compra?.producto?.nombre }}</td>
+    <td>{{ pedido.fechaCompra | date: 'dd/MM/yyyy' }}</td>
+    <td>{{ pedido.fechaEntrega | date: 'dd/MM/yyyy' }}</td>
+    <td>
+      <button type="button" class="btn btn-danger" (click)="borrar(pedido._id)">
+        Borrar
+      </button>
+    </td>
+  </tr>
 </table>
