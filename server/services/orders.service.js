@@ -43,17 +43,28 @@ function create(orderParams) {
         'Pedido "' + orderParams.compra.nro_orden + '" ya existe.'
       );
     } else {
-      Producto.findOne({ codBarra: codBarra }, function(err, product) {
-        if (err) deferred.reject(err.name + ': ' + err.message);
-        console.log('ASDSAD333');
-        console.log(orderParams);
+      console.log('ASDASD');
+      console.log(orderParams);
+      orderParams.peso_total = 42;
+      createOrder(orderParams);
 
-        orderParams.peso_total =
-          product.peso * orderParams.compra.producto.cantidad;
-        console.log('ASDSAD444');
-        console.log(orderParams);
-        createOrder(orderParams);
-      });
+      /* Producto.findOne(
+        { codBarra: orderParams.compra.producto.codBarra },
+        function(err, product) {
+          if (err) {
+            console.log(orderParams);
+            deferred.reject(err.name + ': ' + err.message);
+          }
+          console.log('ASDSAD333');
+          console.log(orderParams);
+
+          orderParams.peso_total =
+            product.peso * orderParams.compra.producto.cantidad;
+          console.log('ASDSAD444');
+          console.log(orderParams);
+          createOrder(orderParams);
+        }
+      ); */
     }
   });
 

@@ -29,7 +29,7 @@ describe('Almacen Test', function() {
     compra: {
       nro_orden: 45,
       producto: {
-        codBarra: 1234,
+        codBarra: 33,
         cantidad: 12
       },
       cliente: {
@@ -123,7 +123,7 @@ describe('Almacen Test', function() {
         compra: {
           nro_orden: 12,
           producto: {
-            codBarra: 1234,
+            codBarra: 33,
             cantidad: 5
           },
           cliente: {
@@ -161,7 +161,7 @@ describe('Almacen Test', function() {
         compra: {
           nro_orden: 39,
           producto: {
-            codBarra: 1234,
+            codBarra: 33,
             cantidad: 5
           },
           cliente: {
