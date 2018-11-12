@@ -2,6 +2,10 @@
   "apiUrl": "http://localhost",
   "serverPort": 3003,
   "secret": "TheSecret",
+  
   "ftpLogistica": "ftp.drivehq.com",
-  "ftpAlmacen":"ftp.drivehq.com"
+  "ftpLogisticaRuta": "/tpo",
+
+  "ftpAlmacen":"ftp.drivehq.com",
+  "ftpAlmacenRuta": ""
 }

@@ -6,12 +6,10 @@ var service = {};
 service.obtenerPedidosEntregados = obtenerPedidosEntregados;
 service.subirPedidosAEntregar = subirPedidosAEntregar;
 
-const PATH = '/Logistica';//'/grupo5/almacen';
-
 module.exports = service;
 
 //Upload local file 'foo.txt' to the server:
-function obtenerPedidosEntregados(ftpClient) {
+function obtenerPedidosEntregados(ftpClient, PATH='') {
   const hoy = new Date();
   const DD = hoy.getDate(),
     MM = hoy.getMonth() + 1,
@@ -42,7 +40,7 @@ function obtenerPedidosEntregados(ftpClient) {
 }
 
 //Upload local file 'foo.txt' to the server:
-function subirPedidosAEntregar(ftpClient) {
+function subirPedidosAEntregar(ftpClient, PATH='') {
 
   console.log('Enviando pedidos pendientes...');
 
@@ -68,7 +66,7 @@ function subirPedidosAEntregar(ftpClient) {
       MM = hoy.getMonth() + 1,
       YYYY = hoy.getFullYear();
 
-    const path= `/ordenes-${DD}${MM}${YYYY}.json`; //${PATH}
+    const path= `${PATH}/ordenes-${DD}${MM}${YYYY}.json`; //${PATH}
     console.log(path);
     ftpClient.put(buf, path, function(err) {
       if (err) return console.error(err);

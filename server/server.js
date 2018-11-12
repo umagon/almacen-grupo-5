@@ -32,16 +32,16 @@ let ftpLogistica = new ftp({ host: config.ftpLogistica });
 
 ftpAlmacen.on('ready', function() {
   cron.schedule('10,30,50 * * * * *', () => {
-    logisticaService.subirPedidosAEntregar(ftpAlmacen);
+    logisticaService.obtenerPedidosEntregados(ftpAlmacen, config.ftpAlmacenRuta);
   });
 });
 ftpLogistica.on('ready', function() {
   cron.schedule('0,20,40 * * * * *', () => {
-    logisticaService.obtenerPedidosEntregados(ftpLogistica);
+    logisticaService.subirPedidosAEntregar(ftpLogistica, config.ftpLogisticaRuta);
   });
 });
 
-ftpAlmacen.connect({ host: config.ftpAlmacen, user: 'grupo5', password: 'grupo5'  });
+ftpAlmacen.connect({ host: config.ftpAlmacen, user: 'grupo5', password: 'grupo5' });
 ftpLogistica.connect({ host: config.ftpLogistica, user: 'sgesnouin', password: 'Martes38*t' });
 
 
