@@ -88,9 +88,9 @@ function update(_id, orderParam) {
   return deferred.promise;
 }
 
-function updateList(ordersIds) {
+function updateList(ordersIds, estado) {
   var set = {};
-  set.estado = 'Entregado';
+  set.estado = estado;
   ordersIds.array.forEach(orderId => {
     Pedido.findOneAndUpdate({ orderId: orderId }, set, { new: true }, function(
       err,

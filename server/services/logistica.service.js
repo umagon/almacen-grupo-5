@@ -52,7 +52,7 @@ function subirPedidosAEntregar(ftpClient) {
       YYYY = hoy.getFullYear();
 
     ftpClient.put(buf, `${PATH}/ordenes-${DD}${MM}${YYYY}.json`, function(err) {
-      if (err) return console.error('zero results');
+      if (err) return console.error(err);
 
       ftpClient.end();
 
