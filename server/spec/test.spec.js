@@ -5,8 +5,8 @@ describe('Almacen Test', function() {
   var server;
   var tokenSession = '';
   var userTest = {
-    username: 'Pepe',
-    password: 'asd',
+    username: 'Pepeee',
+    password: 'asddd',
     perfil: 'user',
     isBorrado: false
   };
@@ -52,43 +52,33 @@ describe('Almacen Test', function() {
   });
 
   describe('Usuarios', function() {
-    var data = {};
-    var url = base_url + 'users/register';
-    var params = {
-      url: url,
+    var paramsCreacion = {
+      url: base_url + 'users/register',
       form: userTest
     };
     it('Creación de usuario de prueba', done => {
-      request.post(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
+      request.post(paramsCreacion, (error, response, body) => {
         console.log('Creación de usuario de prueba');
-        expect(data.status).toBe(200);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
 
-    data = {};
-    url = base_url + 'users/';
-    params = {
-      url: url,
+    var paramsAuth = {
+      url: base_url + 'users/',
       form: userTest
     };
 
-    it('Creación de usuario de prueba', done => {
-      request.post(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        console.log('Creación de usuario de prueba');
-        expect(data.status).toBe(200);
+    it('Autenticación de usuario de prueba', done => {
+      request.post(paramsAuth, (error, response, body) => {
+        console.log('Autenticación de usuario de prueba');
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
 
-    data = {};
-    url = base_url + 'users/';
-    params = {
-      url: url,
+    var paramsAuthError = {
+      url: base_url + 'users/',
       form: {
         username: '',
         password: ''
@@ -96,105 +86,77 @@ describe('Almacen Test', function() {
     };
 
     it('Autenticación de usuario incorrecto.', done => {
-      request.post(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
+      request.post(paramsAuthError, (error, response, body) => {
         console.log('Autenticación de usuario incorrecto.');
-        expect(data.status).toBe(400);
+        expect(response.statusCode).toBe(400);
         done();
       });
     });
-
-    data = {};
-    url = base_url + 'users/';
-    params = {
-      url: url,
-      form: {
-        username: userTest.username,
-        password: userTest.password
-      }
-    };
 
     it('Autenticación de usuario.', done => {
-      request.post(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        tokenSession = JSON.parse(data.body).token;
-        userTest.perfil = JSON.parse(data.body).perfil;
-        userTest._id = JSON.parse(data.body)._id;
+      request.post(paramsAuth, (error, response, body) => {
+        userTest.perfil = JSON.parse(body).perfil;
+        userTest._id = JSON.parse(body)._id;
+        console.log(userTest);
         console.log('Autenticación de usuario.');
-        expect(data.status).toBe(200);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
 
-    data = {};
-    url = base_url + 'users/' + 'IDNOEXISTENTE';
-    params = {
-      url: url
+    var paramsUserNotExist = {
+      url: base_url + 'users/' + 'IDNOEXISTENTE'
     };
-
     it('Borrar usuario de prueba no existente.', done => {
-      request.delete(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
+      request.delete(paramsUserNotExist, (error, response, body) => {
         console.log('Borrar usuario de prueba no existente.');
-        expect(data.status).toBe(400);
+        expect(response.statusCode).toBe(400);
         done();
       });
     });
 
-    data = {};
-    url = base_url + 'users/';
-    params = {
-      url: url
+    var paramsAllUsers = {
+      url: base_url + 'users/'
     };
 
     it('Obtener todos los usuarios.', done => {
-      request.get(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
+      request.get(paramsAllUsers, (error, response, body) => {
         console.log('Obtener todos los usuarios.');
-        expect(data.status).toBe(200);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
-
-    data = {};
-    url = base_url + 'users/' + userTest._id;
-    params = {
-      url: url,
+  });
+  /*
+  describe('Usuario - update', function() {
+    var paramsUserUpdate = {
+      url: base_url + 'users/' + userTest._id,
       form: {
         username: 'PePEE'
       }
     };
 
     it('Actualización de usuario.', done => {
-      request.put(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
+      request.put(paramsUserUpdate, (error, response, body) => {
         console.log('Actualización de usuario.');
-        expect(data.status).toBe(200);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
 
-    data = {};
-    url = base_url + 'users/';
-    params = {
-      url: url
+    var paramsAllUsers = {
+      url: base_url + 'users/'
     };
+
     it('Obtener todos los usuarios.', done => {
-      request.get(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
+      request.get(paramsAllUsers, (error, response, body) => {
         console.log('Obtener todos los usuarios.');
-        expect(data.status).toBe(200);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
   });
-
+*/
   describe('Productos', function() {
     var data = {};
     var url = base_url + 'products';
@@ -202,91 +164,74 @@ describe('Almacen Test', function() {
       url: url,
       form: productTest
     };
-    it('Crear producto de prueba', () => {
+    it('Crear producto de prueba', done => {
       request.post(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
         console.log('Crear producto de prueba.');
-        expect(data.status).toBe(200);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
 
-    data = {};
-    url = base_url + 'products/';
-    params = {
-      url: url
+    var paramsProductsGetAll = {
+      url: base_url + 'products/'
     };
 
     it('Obtener todos los productos', done => {
-      request.get(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        productos = JSON.parse(data.body);
+      request.get(paramsProductsGetAll, (error, response, body) => {
+        productos = JSON.parse(body);
         console.log('Obtener todos los productos.');
-        expect(data.status).toBe(200);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
+  });
 
-    data = {};
-    productTest = productos.find(function(producto) {
+  /*
+  productTest = productos.find(function(producto) {
       return producto.nombre === productTest.nombre;
     });
-    url = base_url + 'products/' + productTest._id;
-    params = {
-      url: url,
+
+    var paramsUpdateProduct = {
+      url: base_url + 'products/' + productTest._id,
       form: {
         descripcion: 'Nueva descripcion'
       }
     };
     it('Actualización de producto.', done => {
-      request.put(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
+      request.put(paramsUpdateProduct, (error, response, body) => {
         console.log('Actualización de producto.');
-        expect(data.status).toBe(200);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
-
-    data = {};
-    url = base_url + 'products/';
-    params = {
-      url: url
-    };
 
     it('Obtener todos los productos', done => {
-      request.get(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
+      request.get(paramsProductsGetAll, (error, response, body) => {
         productos = JSON.parse(data.body);
         console.log('Obtener todos los productos.');
-        expect(data.status).toBe(200);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
 
-    data = {};
     productTest = productos.find(function(producto) {
       return producto.nombre === productTest.nombre;
     });
-    url = base_url + 'products/' + productTest._id;
-    params = {
-      url: url
+
+    var paramsDeleteProduct = {
+      url: base_url + 'products/' + productTest._id
     };
 
     it('Borrar producto de prueba.', done => {
-      request.delete(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-
+      request.delete(paramsDeleteProduct, (error, response, body) => {
         console.log('Borrar producto de prueba.');
-        expect(data.status).toBe(200);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
-  });
+  
+
+*/
 
   describe('Pedidos', function() {
     var data = {};
@@ -298,50 +243,40 @@ describe('Almacen Test', function() {
 
     it('Creación de producto de prueba', done => {
       request.post(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-
         console.log('Creación de producto de prueba.');
-        expect(data.status).toBe(200);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
 
-    data = {};
-    url = base_url + 'orders';
-    params = {
-      url: url,
+    var paramsVerifyDuplicateProduct = {
+      url: base_url + 'orders',
       form: orderTest
     };
 
     it('Verificación de duplicado', done => {
-      request.post(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        console.log('Prohibir creación de producto duplicado.');
-        expect(data.status).toBe(400);
+      request.post(paramsVerifyDuplicateProduct, (error, response, body) => {
+        console.log('Verificación de producto duplicado.');
+        expect(response.statusCode).toBe(400);
         done();
       });
     });
 
-    data = {};
-    url = base_url + 'orders/';
-    params = {
-      url: url
+    var paramsGetAllOrders = {
+      url: base_url + 'orders/'
     };
     it('Obtener todos los pedidos.', done => {
-      request.get(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        pedidos = JSON.parse(data.body);
+      request.get(paramsGetAllOrders, (error, response, body) => {
+        pedidos = JSON.parse(body);
         console.log('Obtener todos los pedidos.');
-        expect(data.status).toBe(200);
+        expect(response.statusCode).toBe(200);
         done();
       });
     });
+  });
 
-    data = {};
-    orderTest = pedidos.find(function(pedido) {
+  /*
+orderTest = pedidos.find(function(pedido) {
       return pedido.compra.nro_orden === orderTest.compra.nro_orden;
     });
     url = base_url + 'orders/' + orderTest._id;
@@ -398,24 +333,23 @@ describe('Almacen Test', function() {
         done();
       });
     });
-  });
 
-  describe('Usuarios', function() {
+
+    describe('Usuarios', function() {
     var data = {};
-    beforeAll(done => {
-      var url = base_url + 'users/' + userTest._id;
-      var params = {
-        url: url
-      };
+    var url = base_url + 'users/' + userTest._id;
+    var params = {
+      url: url
+    };
+    it('Borrar usuario de prueba.', () => {
       request.delete(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+        console.log('Borrar usuario de prueba.');
+        expect(data.status).toBe(200);
         done();
       });
     });
-    it('Borrar usuario de prueba.', () => {
-      console.log('Borrar usuario de prueba.');
-      expect(data.status).toBe(200);
-    });
   });
+  */
 });
