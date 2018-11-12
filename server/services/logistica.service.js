@@ -1,17 +1,13 @@
-'use strict';
-
 var ftp = require('ftp'),
   ftpClient = new ftp(),
   config = require('/config.json'),
   ordersService = require('../services/orders.service');
 
-module.exports = {
-  obtenerPedidosEntregados: obtenerPedidosEntregados(),
-  subirPedidosAEntregar: subirPedidosAEntregar()
-};
+var service = {};
+service.obtenerPedidosEntregados = obtenerPedidosEntregados;
+service.subirPedidosAEntregar = subirPedidosAEntregar;
 
-
-
+module.exports = service;
 
 //Upload local file 'foo.txt' to the server:
 function obtenerPedidosEntregados() {
@@ -31,9 +27,11 @@ function obtenerPedidosEntregados() {
       stream.pipe(function(response) {
         console.log('El response: ', response);
         const pedidosEntregados = response.json();
-        
-        ordersService.updateList({_id: pedidosEntregados.map(x=>x._id)}, {estado: 'Entregado'});
-        
+
+        ordersService.updateList(
+          { _id: pedidosEntregados.map(x => x._id) },
+          { estado: 'Entregado' }
+        );
       });
     });
   });
@@ -44,10 +42,10 @@ function obtenerPedidosEntregados() {
 //Upload local file 'foo.txt' to the server:
 function subirPedidosAEntregar() {
   ftpClient.on('ready', function() {
+    let pedidosPendientes = ordersService.getAll({ estado: 'Pendiente' });
 
-    let pedidosPendientes = ordersService.getAll({estado: 'Pendiente'});
-
-    if (!pedidosPendientes.length) console.log('No hay pedidos pendientes de entregar.');
+    if (!pedidosPendientes.length)
+      console.log('No hay pedidos pendientes de entregar.');
 
     var buf = Buffer.from(JSON.stringify(pedidosPendientes));
     const hoy = new Date();

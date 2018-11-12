@@ -8,6 +8,7 @@ service.getAll = getAll;
 service.create = create;
 service.update = update;
 service.delete = _delete;
+service.updateList = updateList;
 
 module.exports = service;
 
@@ -75,6 +76,19 @@ function update(_id, orderParam) {
   }
 
   return deferred.promise;
+}
+
+function updateList(ordersIds) {
+  ordersIds.array.forEach(orderId => {});
+  var set = {};
+  set.estado = 'Entregado';
+
+  Pedido.findOneAndUpdate({ orderId: orderId }, set, { new: true }, function(
+    err,
+    pedido
+  ) {
+    if (err) console.log(err);
+  });
 }
 
 function _delete(id) {
