@@ -19,7 +19,8 @@ function crearPedido(compra) {
     .updateStock(
       compra.producto.codBarra,
       compra.producto.cantidad,
-      compra.cliente.mail
+      compra.cliente.mail,
+      pedido.compra.peso_total
     )
     .then(function() {
       pedido.save(function(err, order) {
@@ -39,5 +40,6 @@ function compraToPedido(compra) {
   pedido.compra = compra;
   pedido.estado = 'Pendiente';
   pedido.fechaCompra = new Date();
+  pedido.compra.peso_total = 0;
   return pedido;
 }

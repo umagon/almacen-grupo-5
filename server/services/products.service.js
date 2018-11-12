@@ -97,12 +97,12 @@ function update(_id, productParam) {
   return deferred.promise;
 }
 
-function updateStock(codBarra, cantidad, mail) {
+function updateStock(codBarra, cantidad, mail, peso) {
   var deferred = Q.defer();
 
   Producto.findOne({ codBarra: codBarra }, function(err, product) {
     if (err) deferred.reject(err.name + ': ' + err.message);
-
+    peso = product.pedo * cantidad;
     if (product.stock >= cantidad) {
       updateProduct(product._id, product.stock - cantidad);
       if (product.stock - cantidad < product.stockLimite) {
