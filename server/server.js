@@ -28,30 +28,27 @@ app.use('/enviarCompra', require('./controllers/purchasesController'));
 
 
 let upload = false;
-let ftpClient = new ftp();
+let ftpAlmacen = new ftp({host: config.ftpAlmacen});
+let ftpLogistica = new ftp({host: config.ftpLogistica});
 
-ftpClient.on('ready', function() {
+ftpAlmacen.on('ready', function() {
 
-  if(upload) {
-    logisticaService.obtenerPedidosEntregados(ftpClient);
-  } else {
-    logisticaService.subirPedidosAEntregar(ftpClient);
-  }
+  setTimeout(()=>{
+    cron.schedule('*/5 * * * * *', () => {
+      logisticaService.subirPedidosAEntregar(ftpAlmacen);
+    });
+  }, 2500);
+  
+});
+ftpLogistica.on('ready', function() {
+    cron.schedule('*/5 * * * * *', () => {
+      //logisticaService.obtenerPedidosEntregados(ftpLogistica);
+    });
+
 });
 
-
-cron.schedule('*/5 * * * * *', () => {
-  try{
-    
-    if(upload=!upload) {
-      ftpClient.connect({ host: config.ftpAlmacen, user: 'grupo5', password: 'grupo5'  });
-    }else{
-      ftpClient.connect({ host: config.ftpLogistica });
-    }
-  } catch(e){
-    console.error(e);
-  }
-});
+ftpAlmacen.connect({ host: config.ftpAlmacen, user: 'grupo5', password: 'grupo5'  });
+ftpLogistica.connect({ host: config.ftpLogistica });
 
 
 //var port = process.env.NODE_ENV === 'production' ? 80 : 4000;

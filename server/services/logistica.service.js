@@ -23,17 +23,18 @@ function obtenerPedidosEntregados(ftpClient) {
 
     stream.once('close', function() {
       ftpClient.end();
+      console.log('Cierra stream obtener pedidos entregados');
     });
     stream.on('data', function(response) {
       const pedidosEntregados = JSON.parse(response.toString().trim());
 
       console.log(pedidosEntregados);
-      const ids = pedidosEntregados.map(x =>{ return {nro_orden: x.compra.nro_orden};});
+      const ids = pedidosEntregados.map(x => x.compra.nro_orden);
       if(!ids.length) return console.error('No hay nuevos pedidos entregados.');
       ordersService.updateList(
         ids,
         'Entregado'
-      ).then(()=> stream.close() );
+      );
     });
   });
 }
@@ -51,6 +52,7 @@ function subirPedidosAEntregar(ftpClient) {
       MM = hoy.getMonth() + 1,
       YYYY = hoy.getFullYear();
 
+      console.log(`${PATH}/ordenes-${DD}${MM}${YYYY}.json`);
     ftpClient.put(buf, `${PATH}/ordenes-${DD}${MM}${YYYY}.json`, function(err) {
       if (err) return console.error(err);
 
