@@ -102,7 +102,11 @@ function updateStock(codBarra, cantidad, mail, peso) {
 
   Producto.findOne({ codBarra: codBarra }, function(err, product) {
     if (err) deferred.reject(err.name + ': ' + err.message);
+
     peso = product.peso * cantidad;
+    console.log('ASDSAD222');
+    console.log(peso);
+
     if (product.stock >= cantidad) {
       updateProduct(product._id, product.stock - cantidad);
       if (product.stock - cantidad < product.stockLimite) {

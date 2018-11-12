@@ -23,6 +23,8 @@ function crearPedido(compra) {
       pedido.compra.peso_total
     )
     .then(function() {
+      console.log('ASDSAD');
+      console.log(pedido);
       pedido.save(function(err, order) {
         if (err) deferred.reject(err.name + ': ' + err.message);
         deferred.resolve();
