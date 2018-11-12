@@ -6,21 +6,17 @@ var PedidoSchema = new Schema({
   compra: {
     numeroCompra: Number,
     producto: {
-      nombre: String,
-      descripcion: String,
-      stock: Number,
-      stockLimite: Number,
-      isBorrado: Boolean,
-      proveedor: {
-        nombre: String,
-        email: String
-      }
+      codBarra: String,
+      cantidad: Number
     },
-    cantidad: Number,
-    descripcion: String
+    cliente: {
+      nombre: String,
+      apellido: String,
+      mail: String,
+      direccion: String
+    }
   },
   estado: String,
-  cantidad: Number,
   fechaCompra: Date,
   fechaEntrega: Date
 });
