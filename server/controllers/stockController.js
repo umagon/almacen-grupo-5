@@ -25,13 +25,13 @@ function productsToStock(products) {
   products.forEach(function(product) {
     stock.push(productToStock(product));
   });
-  return prod;
+  return stock;
 }
 
 function productToStock(product) {
-  var prod = new Object();
+  var prod = {};
   prod.codBarra = product.codBarra;
-  prod.cantidad = stock;
+  prod.cantidad = product.stock;
   return prod;
 }
 

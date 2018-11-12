@@ -5,12 +5,15 @@ var bcrypt = require('bcryptjs');
 var Q = require('q');
 var Producto = require('../models/producto');
 
+var mailService = require('../services/email.service');
+
 var service = {};
 
 service.getAll = getAll;
 service.create = create;
 service.update = update;
 service.delete = _delete;
+service.updateStock = updateStock;
 
 module.exports = service;
 
@@ -89,6 +92,33 @@ function update(_id, productParam) {
       if (err) deferred.reject(err.name + ': ' + err.message);
       deferred.resolve();
     });
+  }
+
+  return deferred.promise;
+}
+
+function updateStock(codBarra, cantidad, mail) {
+  var deferred = Q.defer();
+  Producto.findOne({ codBarra: codBarra }, function(err, product) {
+    if (err) deferred.reject(err.name + ': ' + err.message);
+    if (product.stock >= cantidad) {
+      updateProduct(product._id, product.stock - cantidad);
+      if (product.stock - cantidad < product.stockLimite) {
+        mailService.enviarMail(mail);
+      }
+    } else deferred.reject('No hay stock suficiente');
+  });
+
+  function updateProduct(_id, nuevoStock) {
+    Producto.findOneAndUpdate(
+      { _id: _id },
+      { stock: nuevoStock },
+      { new: true },
+      function(err, producto) {
+        if (err) deferred.reject(err.name + ': ' + err.message);
+        deferred.resolve();
+      }
+    );
   }
 
   return deferred.promise;
