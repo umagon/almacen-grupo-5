@@ -87,7 +87,7 @@ describe('Almacen Test', function() {
       });
     });
     it('Autenticación de usuario.', () => {
-      tokenSession = JSON.parse(data.body).token;
+      //tokenSession = JSON.parse(data.body).token;
       userTest.perfil = JSON.parse(data.body).perfil;
       userTest._id = JSON.parse(data.body)._id;
       console.log('Autenticación de usuario.');
@@ -196,10 +196,7 @@ describe('Almacen Test', function() {
     var url = base_url + 'products';
     var params = {
       url: url,
-      form: productTest,
-      headers: {
-        authorization: 'Bearer ' + tokenSession
-      }
+      form: productTest
     };
     beforeAll(done => {
       request.post(params, (error, response, body) => {

@@ -85,6 +85,7 @@ describe('Almacen Test', function() {
       });
     });
 
+    data = {};
     url = base_url + 'users/';
     params = {
       url: url,
@@ -104,6 +105,7 @@ describe('Almacen Test', function() {
       });
     });
 
+    data = {};
     url = base_url + 'users/';
     params = {
       url: url,
@@ -117,7 +119,6 @@ describe('Almacen Test', function() {
       request.post(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
-
         tokenSession = JSON.parse(data.body).token;
         userTest.perfil = JSON.parse(data.body).perfil;
         userTest._id = JSON.parse(data.body)._id;
@@ -127,110 +128,70 @@ describe('Almacen Test', function() {
       });
     });
 
+    data = {};
     url = base_url + 'users/' + 'IDNOEXISTENTE';
     params = {
       url: url
     };
 
-    it('Borrar usuario de prueba no existente.', () => {
+    it('Borrar usuario de prueba no existente.', done => {
       request.delete(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
-
         console.log('Borrar usuario de prueba no existente.');
         expect(data.status).toBe(400);
         done();
       });
     });
-  });
 
-  /*
-  describe('Usuarios', function() {
-    var data = {};
-    var url = base_url + 'users/';
-    var params = {
-      url: url,
-      headers: {
-        authorization: 'Bearer TOKENINVALIDO'
-      }
+    data = {};
+    url = base_url + 'users/';
+    params = {
+      url: url
     };
-    beforeAll(done => {
+
+    it('Obtener todos los usuarios.', done => {
       request.get(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+        console.log('Obtener todos los usuarios.');
+        expect(data.status).toBe(200);
         done();
       });
     });
-    it('Obtener todos los usuarios sin autenticación.', () => {
-      console.log('Obtener todos los usuarios sin autenticación.');
-      expect(data.status).toBe(400);
-    });
-  });
-  */
 
-  describe('Usuarios', function() {
-    var data = {};
-    var url = base_url + 'users/';
-    var params = {
+    data = {};
+    url = base_url + 'users/' + userTest._id;
+    params = {
       url: url,
-      headers: {
-        authorization: 'Bearer ' + tokenSession
+      form: {
+        username: 'PePEE'
       }
     };
-    beforeAll(done => {
-      request.get(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        done();
-      });
-    });
-    it('Obtener todos los usuarios.', () => {
-      console.log('Obtener todos los usuarios.');
-      expect(data.status).toBe(200);
-    });
-  });
 
-  describe('Actualización de usuario', function() {
-    var data = {};
-    beforeAll(done => {
-      var url = base_url + 'users/' + userTest._id;
-      var params = {
-        url: url,
-        form: {
-          username: 'PePEE'
-        }
-      };
+    it('Actualización de usuario.', done => {
       request.put(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+        console.log('Actualización de usuario.');
+        expect(data.status).toBe(200);
         done();
       });
     });
-    it('Actualización de usuario.', () => {
-      console.log('Actualización de usuario.');
-      expect(data.status).toBe(200);
-    });
-  });
 
-  describe('Usuarios', function() {
-    var data = {};
-    var url = base_url + 'users/';
-    var params = {
-      url: url,
-      headers: {
-        authorization: 'Bearer ' + tokenSession
-      }
+    data = {};
+    url = base_url + 'users/';
+    params = {
+      url: url
     };
-    beforeAll(done => {
+    it('Obtener todos los usuarios.', done => {
       request.get(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+        console.log('Obtener todos los usuarios.');
+        expect(data.status).toBe(200);
         done();
       });
-    });
-    it('Obtener todos los usuarios.', () => {
-      console.log('Obtener todos los usuarios.');
-      expect(data.status).toBe(200);
     });
   });
 
@@ -239,260 +200,203 @@ describe('Almacen Test', function() {
     var url = base_url + 'products';
     var params = {
       url: url,
-      form: productTest,
-      headers: {
-        authorization: 'Bearer ' + tokenSession
-      }
+      form: productTest
     };
-    beforeAll(done => {
-      request.post(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        done();
-      });
-    });
     it('Crear producto de prueba', () => {
-      console.log('Crear producto de prueba.');
-      expect(data.status).toBe(200);
-    });
-  });
-
-  describe('Productos', function() {
-    var data = {};
-    var url = base_url + 'products/';
-    var params = {
-      url: url,
-      headers: {
-        authorization: 'Bearer ' + tokenSession
-      }
-    };
-    beforeAll(done => {
-      request.get(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        done();
-      });
-    });
-    it('Obtener todos los productos', () => {
-      productos = JSON.parse(data.body);
-      console.log('Obtener todos los productos.');
-      expect(data.status).toBe(200);
-    });
-  });
-
-  describe('Actualización de producto', function() {
-    var data = {};
-    beforeAll(done => {
-      productTest = productos.find(function(producto) {
-        return producto.nombre === productTest.nombre;
-      });
-      var url = base_url + 'products/' + productTest._id;
-      var params = {
-        url: url,
-        form: {
-          descripcion: 'Nueva descripcion'
-        }
-      };
-      request.put(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        done();
-      });
-    });
-    it('Actualización de producto.', () => {
-      console.log('Actualización de producto.');
-      expect(data.status).toBe(200);
-    });
-  });
-
-  describe('Productos', function() {
-    var data = {};
-    var url = base_url + 'products/';
-    var params = {
-      url: url,
-      headers: {
-        authorization: 'Bearer ' + tokenSession
-      }
-    };
-    beforeAll(done => {
-      request.get(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        done();
-      });
-    });
-    it('Obtener todos los productos', () => {
-      productos = JSON.parse(data.body);
-      console.log('Obtener todos los productos.');
-      expect(data.status).toBe(200);
-    });
-  });
-
-  describe('Productos', function() {
-    var data = {};
-    beforeAll(done => {
-      productTest = productos.find(function(producto) {
-        return producto.nombre === productTest.nombre;
-      });
-      var url = base_url + 'products/' + productTest._id;
-      var params = {
-        url: url,
-        headers: {
-          authorization: 'Bearer ' + tokenSession
-        }
-      };
-      request.delete(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        done();
-      });
-    });
-    it('Borrar producto de prueba.', () => {
-      console.log('Borrar producto de prueba.');
-      expect(data.status).toBe(200);
-    });
-  });
-
-  describe('Crear pedido de prueba', function() {
-    var data = {};
-    beforeAll(done => {
-      var url = base_url + 'orders';
-      var params = {
-        url: url,
-        form: orderTest,
-        headers: {
-          authorization: 'Bearer ' + tokenSession
-        }
-      };
       request.post(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+        console.log('Crear producto de prueba.');
+        expect(data.status).toBe(200);
         done();
       });
     });
-    it('Creación de producto de prueba', () => {
-      console.log('Creación de producto de prueba.');
-      expect(data.status).toBe(200);
-    });
-  });
 
-  describe('Crear pedido duplicado', function() {
-    var data = {};
-    beforeAll(done => {
-      var url = base_url + 'orders';
-      var params = {
-        url: url,
-        form: orderTest,
-        headers: {
-          authorization: 'Bearer ' + tokenSession
-        }
-      };
-      request.post(params, (error, response, body) => {
-        data.status = response.statusCode;
-        data.body = body;
-        done();
-      });
-    });
-    it('Verificación de duplicado', () => {
-      console.log('Prohibir creación de producto duplicado.');
-      expect(data.status).toBe(400);
-    });
-  });
-
-  describe('Obtener todos los pedidos', function() {
-    var data = {};
-    var url = base_url + 'orders/';
-    var params = {
-      url: url,
-      headers: {
-        authorization: 'Bearer ' + tokenSession
-      }
+    data = {};
+    url = base_url + 'products/';
+    params = {
+      url: url
     };
-    beforeAll(done => {
+
+    it('Obtener todos los productos', done => {
       request.get(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+        productos = JSON.parse(data.body);
+        console.log('Obtener todos los productos.');
+        expect(data.status).toBe(200);
         done();
       });
     });
-    it('Obtener todos los pedidos.', () => {
-      pedidos = JSON.parse(data.body);
-      console.log('Obtener todos los pedidos.');
-      expect(data.status).toBe(200);
-    });
-  });
 
-  describe('Actualización de pedido', function() {
-    var data = {};
-    beforeAll(done => {
-      orderTest = pedidos.find(function(pedido) {
-        return pedido.compra.nro_orden === orderTest.compra.nro_orden;
-      });
-      var url = base_url + 'orders/' + orderTest._id;
-      var params = {
-        url: url,
-        form: {
-          estado: 'Enviado',
-          cantidad: 999
-        }
-      };
+    data = {};
+    productTest = productos.find(function(producto) {
+      return producto.nombre === productTest.nombre;
+    });
+    url = base_url + 'products/' + productTest._id;
+    params = {
+      url: url,
+      form: {
+        descripcion: 'Nueva descripcion'
+      }
+    };
+    it('Actualización de producto.', done => {
       request.put(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+        console.log('Actualización de producto.');
+        expect(data.status).toBe(200);
         done();
       });
     });
-    it('Actualización de pedido.', () => {
-      console.log('Actualización de pedido.');
-      expect(data.status).toBe(200);
-    });
-  });
 
-  describe('Obtener todos los pedidos', function() {
-    var data = {};
-    var url = base_url + 'orders/';
-    var params = {
-      url: url,
-      headers: {
-        authorization: 'Bearer ' + tokenSession
-      }
+    data = {};
+    url = base_url + 'products/';
+    params = {
+      url: url
     };
-    beforeAll(done => {
+
+    it('Obtener todos los productos', done => {
       request.get(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+        productos = JSON.parse(data.body);
+        console.log('Obtener todos los productos.');
+        expect(data.status).toBe(200);
         done();
       });
     });
-    it('Obtener todos los pedidos.', () => {
-      pedidos = JSON.parse(data.body);
-      console.log('Obtener todos los pedidos.');
-      expect(data.status).toBe(200);
-    });
-  });
 
-  describe('Borrar pedido de prueba.', function() {
-    var data = {};
-    beforeAll(done => {
-      orderTest = pedidos.find(function(pedido) {
-        return pedido.compra.nro_orden === orderTest.compra.nro_orden;
-      });
-      var url = base_url + 'orders/' + orderTest._id;
-      var params = {
-        url: url,
-        headers: {
-          authorization: 'Bearer ' + tokenSession
-        }
-      };
+    data = {};
+    productTest = productos.find(function(producto) {
+      return producto.nombre === productTest.nombre;
+    });
+    url = base_url + 'products/' + productTest._id;
+    params = {
+      url: url
+    };
+
+    it('Borrar producto de prueba.', done => {
       request.delete(params, (error, response, body) => {
         data.status = response.statusCode;
         data.body = body;
+
+        console.log('Borrar producto de prueba.');
+        expect(data.status).toBe(200);
         done();
       });
     });
-    it('Borrar pedido de prueba.', () => {
-      console.log('Borrar pedido de prueba');
-      expect(data.status).toBe(200);
+  });
+
+  describe('Pedidos', function() {
+    var data = {};
+    var url = base_url + 'orders';
+    var params = {
+      url: url,
+      form: orderTest
+    };
+
+    it('Creación de producto de prueba', done => {
+      request.post(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+
+        console.log('Creación de producto de prueba.');
+        expect(data.status).toBe(200);
+        done();
+      });
+    });
+
+    data = {};
+    url = base_url + 'orders';
+    params = {
+      url: url,
+      form: orderTest
+    };
+
+    it('Verificación de duplicado', done => {
+      request.post(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        console.log('Prohibir creación de producto duplicado.');
+        expect(data.status).toBe(400);
+        done();
+      });
+    });
+
+    data = {};
+    url = base_url + 'orders/';
+    params = {
+      url: url
+    };
+    it('Obtener todos los pedidos.', done => {
+      request.get(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        pedidos = JSON.parse(data.body);
+        console.log('Obtener todos los pedidos.');
+        expect(data.status).toBe(200);
+        done();
+      });
+    });
+
+    data = {};
+    orderTest = pedidos.find(function(pedido) {
+      return pedido.compra.nro_orden === orderTest.compra.nro_orden;
+    });
+    url = base_url + 'orders/' + orderTest._id;
+    params = {
+      url: url,
+      form: {
+        estado: 'Enviado',
+        cantidad: 999
+      }
+    };
+
+    it('Actualización de pedido.', done => {
+      request.put(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        console.log('Actualización de pedido.');
+        expect(data.status).toBe(200);
+        done();
+      });
+    });
+
+    data = {};
+    url = base_url + 'orders/';
+    params = {
+      url: url
+    };
+
+    it('Obtener todos los pedidos.', done => {
+      request.get(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        pedidos = JSON.parse(data.body);
+        console.log('Obtener todos los pedidos.');
+        expect(data.status).toBe(200);
+        done();
+      });
+    });
+
+    data = {};
+
+    orderTest = pedidos.find(function(pedido) {
+      return pedido.compra.nro_orden === orderTest.compra.nro_orden;
+    });
+    url = base_url + 'orders/' + orderTest._id;
+    params = {
+      url: url
+    };
+    it('Borrar pedido de prueba.', done => {
+      request.delete(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        console.log('Borrar pedido de prueba');
+        expect(data.status).toBe(200);
+        done();
+      });
     });
   });
 
@@ -501,10 +405,7 @@ describe('Almacen Test', function() {
     beforeAll(done => {
       var url = base_url + 'users/' + userTest._id;
       var params = {
-        url: url,
-        headers: {
-          authorization: 'Bearer ' + tokenSession
-        }
+        url: url
       };
       request.delete(params, (error, response, body) => {
         data.status = response.statusCode;
