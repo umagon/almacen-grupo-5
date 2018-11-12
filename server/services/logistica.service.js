@@ -48,7 +48,7 @@ function subirPedidosAEntregar(ftpClient) {
 
   ordersService.getByStatus('Pendiente').then(function(pedidosPendientes){
     if (!pedidosPendientes.length)
-      console.log('No hay pedidos pendientes de entregar.');
+      return console.log('No hay pedidos pendientes de entregar.');
 
     let ordenes = pedidosPendientes.map(x=> {
       return {
@@ -61,6 +61,9 @@ function subirPedidosAEntregar(ftpClient) {
         }
       }
     });
+
+    console.log(pedidosPendientes);
+    console.log(ordenes);
     
     var buf = Buffer.from(JSON.stringify(ordenes));
     const hoy = new Date();
