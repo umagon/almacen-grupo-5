@@ -12,7 +12,8 @@ var ProductoSchema = new Schema({
   proveedor: {
     nombre: String,
     email: String
-  }
+  },
+  peso: Number
 });
 
 module.exports = mongoose.model('Producto', ProductoSchema);

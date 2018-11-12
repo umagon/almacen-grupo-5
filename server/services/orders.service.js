@@ -92,7 +92,7 @@ function updateList(ordersIds, estado) {
   var set = {};
   set.estado = estado;
   ordersIds.forEach(orderId => {
-    Pedido.findOneAndUpdate({ "compra.nro_orden": orderId }, set, { new: true }, function(
+    Pedido.findOneAndUpdate({ "compra.nro_orden": ''+orderId }, set, { new: true }, function(
       err,
       pedido
     ) {

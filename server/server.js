@@ -33,16 +33,14 @@ let ftpLogistica = new ftp({host: config.ftpLogistica});
 
 ftpAlmacen.on('ready', function() {
 
-  setTimeout(()=>{
-    cron.schedule('*/5 * * * * *', () => {
-      logisticaService.subirPedidosAEntregar(ftpAlmacen);
-    });
-  }, 2500);
+  cron.schedule('10,30,50 * * * * *', () => {
+    logisticaService.subirPedidosAEntregar(ftpAlmacen);
+  });
   
 });
 ftpLogistica.on('ready', function() {
-    cron.schedule('*/5 * * * * *', () => {
-      //logisticaService.obtenerPedidosEntregados(ftpLogistica);
+    cron.schedule('0,20,40 * * * * *', () => {
+      logisticaService.obtenerPedidosEntregados(ftpLogistica);
     });
 
 });

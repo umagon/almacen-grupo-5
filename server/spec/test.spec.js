@@ -1,3 +1,4 @@
+
 var request = require('request');
 var base_url = 'http://localhost:3003/';
 
@@ -241,7 +242,7 @@ describe('Almacen Test', function() {
       form: orderTest
     };
 
-    it('Creación de producto de prueba', done => {
+    it('Creación de pedido de prueba', done => {
       request.post(params, (error, response, body) => {
         console.log('Creación de producto de prueba.');
         expect(response.statusCode).toBe(200);
