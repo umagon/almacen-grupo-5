@@ -2,11 +2,13 @@
 
 
 var mongoose = require('mongoose'),
+  config = require('/config.json'),
+  ordersService = require('../services/orders.service'),
   Producto = mongoose.model('Producto'),
-  Pedido = mongoose.model('Pedido');
+  Pedido = mongoose.model('Pedido'),
   ftp = require('ftp'),
   c = new ftp(),
-  config = require('/config.json');
+;
 
 
 //Acá irían los métodos de comunicación con otros sistemas...
@@ -46,7 +48,7 @@ exports.subirPedidosAEntregar(){
   c.on('ready', function() {
     
     //Obtener pedidos pendientes.
-    let pedidosPendientes = {};
+    let pedidosPendientes = ordersService.getAll({estado: 'Pendiente'});
 
     var buf = Buffer.from(JSON.stringify(pedidosPendientes));
     const hoy = new Date();
