@@ -12,9 +12,9 @@ function crearPedido(req, res) {
   purchaseService
     .crearPedido(req.body)
     .then(function() {
-      res.json('Order created!');
+      res.json(true);
     })
     .catch(function(err) {
-      res.status(400).send(err);
+      res.status(400).send(false);
     });
 }

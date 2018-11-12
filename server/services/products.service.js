@@ -97,34 +97,32 @@ function update(_id, productParam) {
   return deferred.promise;
 }
 
-function updateStock(codBarra, cantidad, mail, peso) {
+function updateStock(codBarra, cantidad, mail) {
   var deferred = Q.defer();
 
   Producto.findOne({ codBarra: codBarra }, function(err, product) {
-    if (err) deferred.reject(err.name + ': ' + err.message);
+    if (err) deferred.reject(false);
 
-    peso = product.peso * cantidad;
-    console.log('ASDSAD222');
-    console.log(peso);
+    var peso = product.peso * cantidad;
 
     if (product.stock >= cantidad) {
-      updateProduct(product._id, product.stock - cantidad);
       if (product.stock - cantidad < product.stockLimite) {
         mailService.enviarMail(mail);
       }
+      updateProduct(product._id, product.stock - cantidad, peso);
     } else {
-      deferred.reject('No hay stock suficiente');
+      deferred.reject(false);
     }
   });
 
-  function updateProduct(_id, nuevoStock) {
+  function updateProduct(_id, nuevoStock, peso) {
     Producto.findOneAndUpdate(
       { _id: _id },
       { stock: nuevoStock },
       { new: true },
       function(err, producto) {
         if (err) deferred.reject(err.name + ': ' + err.message);
-        deferred.resolve();
+        deferred.resolve(peso);
       }
     );
   }

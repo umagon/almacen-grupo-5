@@ -15,23 +15,23 @@ function crearPedido(compra) {
   var deferred = Q.defer();
   var pedido = compraToPedido(compra);
 
+  console.log('LA COMPRA');
+  console.log(compra);
   productService
     .updateStock(
-      compra.producto.codBarra,
-      compra.producto.cantidad,
-      compra.cliente.mail,
-      pedido.peso_total
+      compra.Producto.codBarra,
+      compra.Producto.cantidad,
+      compra.Cliente.mail
     )
-    .then(function() {
-      console.log('ASDSAD');
-      console.log(pedido);
+    .then(function(peso) {
+      pedido.peso_total = peso;
       pedido.save(function(err, order) {
         if (err) deferred.reject(err.name + ': ' + err.message);
-        deferred.resolve();
+        deferred.resolve(true);
       });
     })
     .catch(function(err) {
-      deferred.reject(err);
+      deferred.reject(false);
     });
 
   return deferred.promise;

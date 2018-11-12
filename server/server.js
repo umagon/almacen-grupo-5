@@ -26,23 +26,19 @@ app.use('/orders', require('./controllers/ordersController'));
 app.use('/getStock', require('./controllers/stockController'));
 app.use('/enviarCompra', require('./controllers/purchasesController'));
 
-
 let upload = false;
-let ftpAlmacen = new ftp({host: config.ftpAlmacen});
-let ftpLogistica = new ftp({host: config.ftpLogistica});
+let ftpAlmacen = new ftp({ host: config.ftpAlmacen });
+let ftpLogistica = new ftp({ host: config.ftpLogistica });
 
 ftpAlmacen.on('ready', function() {
-
   cron.schedule('10,30,50 * * * * *', () => {
     logisticaService.subirPedidosAEntregar(ftpAlmacen);
   });
-  
 });
 ftpLogistica.on('ready', function() {
-    cron.schedule('0,20,40 * * * * *', () => {
-      logisticaService.obtenerPedidosEntregados(ftpLogistica);
-    });
-
+  cron.schedule('0,20,40 * * * * *', () => {
+    logisticaService.obtenerPedidosEntregados(ftpLogistica);
+  });
 });
 
 ftpAlmacen.connect({ host: config.ftpAlmacen, user: 'grupo5', password: 'grupo5'  });
