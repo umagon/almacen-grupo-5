@@ -6,7 +6,7 @@ var service = {};
 service.obtenerPedidosEntregados = obtenerPedidosEntregados;
 service.subirPedidosAEntregar = subirPedidosAEntregar;
 
-const PATH = '/grupo5/almacen';
+const PATH = '/Logistica';//'/grupo5/almacen';
 
 module.exports = service;
 
@@ -62,9 +62,6 @@ function subirPedidosAEntregar(ftpClient) {
       }
     });
 
-    console.log(pedidosPendientes);
-    console.log(ordenes);
-    
     var buf = Buffer.from(JSON.stringify(ordenes));
     const hoy = new Date();
     const DD = hoy.getDate(),
