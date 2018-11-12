@@ -54,7 +54,7 @@ function subirPedidosAEntregar(ftpClient) {
       return {
         orden_id: x.compra.nro_orden,
         cliente: x.compra.cliente,
-        peso_total: x.compra.producto.peso * x.compra.producto.cantidad,
+        peso_total: x.peso_total,
         producto: {
           id: x.compra.producto.codBarra,
           nombre: x.compra.producto.nombre

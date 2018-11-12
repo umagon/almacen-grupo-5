@@ -8,12 +8,14 @@
 	<table class="table" *ngIf="productos.length">
 		<tr>
 			<th>Producto</th>
+			<th>Peso</th>
 			<th>Stock</th>
 			<th>Mínimo</th>
 			<th><button type="button" class="btn btn-success" (click)="productoActual = {}">Nuevo</button></th>
 		</tr>
 		<tr *ngFor="let producto of productos">
 			<td [title]="producto.descripcion">{{producto.nombre}}</td>
+			<td>{{producto.peso}}</td>
 			<td [ngClass]="{
 				'text-danger': producto.stock < producto.stockLimite,
 				'text-warning': producto.stock < producto.stockLimite*2
