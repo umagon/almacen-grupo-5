@@ -13,6 +13,7 @@ describe('Almacen Test', function() {
   var productos = [];
   var productTest = {
     nombre: 'Producto Test',
+    codBarra: 1234,
     descripcion: 'Producto de Test',
     stock: 200,
     stockLimite: 50,
@@ -27,21 +28,17 @@ describe('Almacen Test', function() {
     compra: {
       numeroCompra: 45,
       producto: {
-        nombre: 'Coca-cola',
-        descripcion: 'Gaseosa sabor cola',
-        stock: 200,
-        stockLimite: 50,
-        isBorrado: false,
-        proveedor: {
-          nombre: 'Coca-Cola Company',
-          email: 'company@cocacola.com'
-        }
+        codBarra: 1234,
+        cantidad: 12
       },
-      cantidad: 1,
-      descripcion: 'Compra test'
+      cliente: {
+        nombre: 'Juan',
+        apellido: 'Perez',
+        mail: 'juanperez@mail.com',
+        direccion: 'calle 123'
+      }
     },
     estado: 'Pendiente',
-    cantidad: 1,
     fechaCompra: new Date(),
     fechaEntrega: null
   };
@@ -86,10 +83,7 @@ describe('Almacen Test', function() {
       var url = base_url + 'orders';
       var params = {
         url: url,
-        form: orderTest,
-        headers: {
-          authorization: 'Bearer ' + tokenSession
-        }
+        form: orderTest
       };
       request.post(params, (error, response, body) => {
         data.status = response.statusCode;
@@ -97,15 +91,11 @@ describe('Almacen Test', function() {
         done();
       });
     });
-    it('Creación de producto de prueba', () => {
-      console.log('Creación de producto de prueba.');
+    it('Creación de pedido de prueba 1', () => {
+      console.log('Creación de pedido de prueba 1.');
       expect(data.status).toBe(200);
     });
   });
-
-
-
-
 
   describe('Crear pedido de prueba', function() {
     var data = {};
@@ -114,31 +104,24 @@ describe('Almacen Test', function() {
         compra: {
           numeroCompra: 12,
           producto: {
-            nombre: 'Coca-cola',
-            descripcion: 'Gaseosa sabor cola',
-            stock: 200,
-            stockLimite: 50,
-            isBorrado: false,
-            proveedor: {
-              nombre: 'Coca-Cola Company',
-              email: 'company@cocacola.com'
-            }
+            codBarra: 1234,
+            cantidad: 5
           },
-          cantidad: 1,
-          descripcion: 'Compra test'
+          cliente: {
+            nombre: 'Pablo',
+            apellido: 'Gomez',
+            mail: 'pablogomez@mail.com',
+            direccion: 'Calle 23'
+          }
         },
         estado: 'Entregado',
-        cantidad: 1,
-        fechaCompra: new Date("2018-01-01"),
-        fechaEntrega: new Date("2018-01-06")
+        fechaCompra: new Date('2018-01-01'),
+        fechaEntrega: new Date('2018-01-06')
       };
       var url = base_url + 'orders';
       var params = {
         url: url,
-        form: orderTest,
-        headers: {
-          authorization: 'Bearer ' + tokenSession
-        }
+        form: orderTest
       };
       request.post(params, (error, response, body) => {
         data.status = response.statusCode;
@@ -146,15 +129,11 @@ describe('Almacen Test', function() {
         done();
       });
     });
-    it('Creación de producto de prueba', () => {
-      console.log('Creación de producto de prueba.');
+    it('Creación de pedido de prueba 2', () => {
+      console.log('Creación de pedido de prueba 2.');
       expect(data.status).toBe(200);
     });
   });
-
-
-
-  
 
   describe('Crear pedido de prueba', function() {
     var data = {};
@@ -163,31 +142,24 @@ describe('Almacen Test', function() {
         compra: {
           numeroCompra: 39,
           producto: {
-            nombre: 'Coca-cola',
-            descripcion: 'Gaseosa sabor cola',
-            stock: 200,
-            stockLimite: 50,
-            isBorrado: false,
-            proveedor: {
-              nombre: 'Coca-Cola Company',
-              email: 'company@cocacola.com'
-            }
+            codBarra: 1234,
+            cantidad: 5
           },
-          cantidad: 1,
-          descripcion: 'Compra test'
+          cliente: {
+            nombre: 'Pablo',
+            apellido: 'Gomez',
+            mail: 'pablogomez@mail.com',
+            direccion: 'Calle 23'
+          }
         },
         estado: 'Enviado',
-        cantidad: 1,
-        fechaCompra: new Date("2018-10-07"),
+        fechaCompra: new Date('2018-10-07'),
         fechaEntrega: null
       };
       var url = base_url + 'orders';
       var params = {
         url: url,
-        form: orderTest,
-        headers: {
-          authorization: 'Bearer ' + tokenSession
-        }
+        form: orderTest
       };
       request.post(params, (error, response, body) => {
         data.status = response.statusCode;
@@ -195,10 +167,9 @@ describe('Almacen Test', function() {
         done();
       });
     });
-    it('Creación de producto de prueba', () => {
-      console.log('Creación de producto de prueba.');
+    it('Creación de pedido de prueba 3', () => {
+      console.log('Creación de pedido de prueba 3.');
       expect(data.status).toBe(200);
     });
   });
 });
-

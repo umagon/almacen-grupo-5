@@ -20,31 +20,8 @@ app.use(bodyParser.json());
 app.use('/users', require('./controllers/usersController'));
 app.use('/products', require('./controllers/productsController'));
 app.use('/orders', require('./controllers/ordersController'));
-
-app.use(
-  expressJwt({
-    secret: config.secret,
-    getToken: function(req) {
-      if (
-        req.headers.authorization &&
-        req.headers.authorization.split(' ')[0] === 'Bearer'
-      ) {
-        return req.headers.authorization.split(' ')[1];
-      } else if (req.query && req.query.token) {
-        return req.query.token;
-      }
-      return null;
-    }
-  }).unless({ path: ['/users/authenticate', '/users/register'] })
-);
-
-app.use(function(err, req, res, next) {
-  if (err.name === 'UnauthorizedError') {
-    res.status(401).send('Invalid Token');
-  } else {
-    throw err;
-  }
-});
+app.use('/getStock', require('./controllers/stockController'));
+app.use('/enviarCompra', require('./controllers/purchasesController'));
 
 //var port = process.env.NODE_ENV === 'production' ? 80 : 4000;
 var server = app.listen(config.serverPort, function() {

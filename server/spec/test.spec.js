@@ -13,6 +13,7 @@ describe('Almacen Test', function() {
   var productos = [];
   var productTest = {
     nombre: 'Producto Test',
+    codBarra: 1235,
     descripcion: 'Producto de Test',
     stock: 200,
     stockLimite: 50,
@@ -25,23 +26,19 @@ describe('Almacen Test', function() {
   var pedidos = [];
   var orderTest = {
     compra: {
-      numeroCompra: 0,
+      numeroCompra: 32,
       producto: {
-        nombre: 'Coca-cola',
-        descripcion: 'Gaseosa sabor cola',
-        stock: 200,
-        stockLimite: 50,
-        isBorrado: false,
-        proveedor: {
-          nombre: 'Coca-Cola Company',
-          email: 'company@cocacola.com'
-        }
+        codBarra: 1234,
+        cantidad: 12
       },
-      cantidad: 1,
-      descripcion: 'Compra test'
+      cliente: {
+        nombre: 'Juan',
+        apellido: 'Perez',
+        mail: 'juanperez@mail.com',
+        direccion: 'calle 123'
+      }
     },
     estado: 'Pendiente',
-    cantidad: 1,
     fechaCompra: 1,
     fechaEntrega: 1
   };
