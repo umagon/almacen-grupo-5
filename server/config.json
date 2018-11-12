@@ -3,5 +3,5 @@
   "serverPort": 3003,
   "secret": "TheSecret",
   "ftpLogistica": "",
-  "ftpAlmacen":""
+  "ftpAlmacen":"ftp://ftp.drivehq.com/grupo5/almacen"
 }
