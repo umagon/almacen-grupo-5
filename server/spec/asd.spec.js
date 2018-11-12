@@ -51,6 +51,24 @@ describe('Almacen Test', function() {
     server.close();
   });
 
+  describe('Creacion de usuario de prueba', function() {
+    var data = {};
+    var url = base_url + 'users/register';
+    var params = {
+      url: url,
+      form: userTest
+    };
+    it('Creación de usuario de prueba', done => {
+      request.post(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        console.log('Creación de usuario de prueba');
+        expect(data.status).toBe(200);
+        done();
+      });
+    });
+  });
+
   describe('Autenticación de usuario', function() {
     var data = {};
     var url = base_url + 'users/';
