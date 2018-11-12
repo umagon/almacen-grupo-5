@@ -44,7 +44,7 @@ cron.schedule('*/5 * * * * *', () => {
   try{
     
     if(upload=!upload) {
-      ftpClient.connect({ host: config.ftpAlmacen });
+      ftpClient.connect({ host: config.ftpAlmacen, user: 'grupo5', password: 'grupo5'  });
     }else{
       ftpClient.connect({ host: config.ftpLogistica });
     }
