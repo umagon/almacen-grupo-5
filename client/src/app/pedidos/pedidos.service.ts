@@ -16,6 +16,10 @@ export class PedidosService {
       return this.http.get<Pedido[]>(PATH);
   }
 
+  getByStatus(estado: string){
+    return this.http.get<Pedido[]>(PATH + '/estado/'+ estado);
+  }
+
   getById(_id: string) {
       return this.http.get(PATH + '/' + _id);
   }

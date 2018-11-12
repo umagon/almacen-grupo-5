@@ -28,11 +28,11 @@ function obtenerPedidosEntregados(ftpClient) {
       const pedidosEntregados = JSON.parse(response.toString().trim());
 
       console.log(pedidosEntregados);
-      const ids = pedidosEntregados.map(x => x._id);
+      const ids = pedidosEntregados.map(x =>{ return {nro_orden: x.compra.nro_orden};});
       if(!ids.length) return console.error('No hay nuevos pedidos entregados.');
       ordersService.updateList(
         ids,
-        { estado: 'Entregado' }
+        'Entregado'
       ).then(()=> stream.close() );
     });
   });
@@ -41,7 +41,7 @@ function obtenerPedidosEntregados(ftpClient) {
 //Upload local file 'foo.txt' to the server:
 function subirPedidosAEntregar(ftpClient) {
   console.log('Enviando pedidos pendientes...');
-  ordersService.getAll().then(function(pedidosPendientes){
+  ordersService.getByStatus('Pendiente').then(function(pedidosPendientes){
       if (!pedidosPendientes.length)
       console.log('No hay pedidos pendientes de entregar.');
 
@@ -53,7 +53,12 @@ function subirPedidosAEntregar(ftpClient) {
 
     ftpClient.put(buf, `${PATH}/ordenes-${DD}${MM}${YYYY}.json`, function(err) {
       if (err) return console.error('zero results');
+
       ftpClient.end();
+
+      const ids = pedidosPendientes.map(x=> { return {nro_orden: x.compra.nro_orden}; });
+      ordersService.updateList(ids, 'Enviado').then(()=>console.log('Pedidos enviados.'));
+
     });
   });
 
