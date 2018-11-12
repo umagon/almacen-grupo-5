@@ -89,15 +89,15 @@ function update(_id, orderParam) {
 }
 
 function updateList(ordersIds) {
-  ordersIds.array.forEach(orderId => {});
   var set = {};
   set.estado = 'Entregado';
-
-  Pedido.findOneAndUpdate({ orderId: orderId }, set, { new: true }, function(
-    err,
-    pedido
-  ) {
-    if (err) console.log(err);
+  ordersIds.array.forEach(orderId => {
+    Pedido.findOneAndUpdate({ orderId: orderId }, set, { new: true }, function(
+      err,
+      pedido
+    ) {
+      if (err) console.log(err);
+    });
   });
 }
 
