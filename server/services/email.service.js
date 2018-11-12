@@ -18,22 +18,10 @@ async function enviarMail(destino) {
     // Create a SMTP transporter object
     let transporter = nodemailer.createTransport(
       {
-        /*host: account.smtp.host,
-        port: account.smtp.port,
-        secure: account.smtp.secure,
-        auth: {
-          user: account.user,
-          pass: account.pass
-        },
-        
-        
-        host: 'smtp.gmail.com',
-        port: 587,
-        */
         service: 'gmail',
         auth: {
-          user: '@gmail.com',
-          pass: 'password'
+          user: 'Iapp2018lunes@gmail.com',
+          pass: 'Iapapa12'
         },
         tls: {
           rejectUnauthorized: false
