@@ -19,19 +19,16 @@ function obtenerPedidosEntregados(ftpClient) {
 
   console.log('Obteniendo pedidos entregados... buscando '+ `${PATH}/ordenes-${DD}${MM}${YYYY}.json`);
   ftpClient.get(`${PATH}/ordenes-${DD}${MM}${YYYY}.json`, function(err, stream) {
-    console.log('Archivo buscado.');
-
     if (err) return console.error('zero results');
 
     stream.once('close', function() {
       ftpClient.end();
     });
     stream.on('data', function(response) {
-      console.log('El response: ', response);
-      const pedidosEntregados = JSON.stringify(response.toString());
+      const pedidosEntregados = JSON.parse(response.toString().trim());
 
       console.log(pedidosEntregados);
-      const ids =pedidosEntregados.map(x => x._id);
+      const ids = pedidosEntregados.map(x => x._id);
       if(!ids.length) return console.error('No hay nuevos pedidos entregados.');
       ordersService.updateList(
         ids,
