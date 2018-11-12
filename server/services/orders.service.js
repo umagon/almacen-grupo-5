@@ -9,8 +9,18 @@ service.create = create;
 service.update = update;
 service.delete = _delete;
 service.updateList = updateList;
+service.getByStatus = getByStatus;
 
 module.exports = service;
+
+function getByStatus(status) {
+  var deferred = Q.defer();
+  Pedido.find({ estado: status }, function(err, pedidos) {
+    if (err) deferred.reject(err.name + ': ' + err.message);
+    deferred.resolve(pedidos);
+  });
+  return deferred.promise;
+}
 
 function getAll() {
   var deferred = Q.defer();
