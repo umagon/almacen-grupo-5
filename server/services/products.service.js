@@ -101,7 +101,7 @@ function updateStock(codBarra, cantidad, mail) {
   var deferred = Q.defer();
 
   Producto.findOne({ codBarra: codBarra }, function(err, product) {
-    if (err) deferred.reject(err.name + ': ' + err.message);
+    if (err) deferred.reject(false);
 
     var peso = product.peso * cantidad;
 
@@ -111,7 +111,7 @@ function updateStock(codBarra, cantidad, mail) {
       }
       updateProduct(product._id, product.stock - cantidad, peso);
     } else {
-      deferred.reject('No hay stock suficiente');
+      deferred.reject(false);
     }
   });
 

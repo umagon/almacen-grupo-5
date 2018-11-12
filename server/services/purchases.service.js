@@ -19,19 +19,19 @@ function crearPedido(compra) {
   console.log(compra);
   productService
     .updateStock(
-      compra.producto.codBarra,
-      compra.producto.cantidad,
-      compra.cliente.mail
+      compra.Producto.codBarra,
+      compra.Producto.cantidad,
+      compra.Cliente.mail
     )
     .then(function(peso) {
       pedido.peso_total = peso;
       pedido.save(function(err, order) {
         if (err) deferred.reject(err.name + ': ' + err.message);
-        deferred.resolve();
+        deferred.resolve(true);
       });
     })
     .catch(function(err) {
-      deferred.reject(err);
+      deferred.reject(false);
     });
 
   return deferred.promise;
