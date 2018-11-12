@@ -2,6 +2,6 @@
   "apiUrl": "http://localhost",
   "serverPort": 3003,
   "secret": "TheSecret",
-  "ftpLogistica": "ftp://ftp.drivehq.com/grupo5/almacen",
-  "ftpAlmacen":"ftp://ftp.drivehq.com/grupo5/almacen"
+  "ftpLogistica": "ftp.drivehq.com",
+  "ftpAlmacen":"ftp.drivehq.com"
 }

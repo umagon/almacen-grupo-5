@@ -1,50 +1,51 @@
 var ftp = require('ftp'),
-  ftpClient = new ftp(),
-  config = require('/config.json'),
+  config = require('../config.json'),
   ordersService = require('../services/orders.service');
 
 var service = {};
 service.obtenerPedidosEntregados = obtenerPedidosEntregados;
 service.subirPedidosAEntregar = subirPedidosAEntregar;
 
+const PATH = '/grupo5/almacen';
+
 module.exports = service;
 
 //Upload local file 'foo.txt' to the server:
-function obtenerPedidosEntregados() {
-  ftpClient.on('ready', function() {
-    const hoy = new Date();
-    const DD = hoy.getDate(),
-      MM = hoy.getMonth() + 1,
-      YYYY = hoy.getFullYear();
+function obtenerPedidosEntregados(ftpClient) {
+  const hoy = new Date();
+  const DD = hoy.getDate(),
+    MM = hoy.getMonth() + 1,
+    YYYY = hoy.getFullYear();
 
-    ftpClient.get(`ordenes-${DD}${MM}${YYYY}.json`, function(err, stream) {
-      if (err) throw err;
+  console.log('Obteniendo pedidos entregados... buscando '+ `${PATH}/ordenes-${DD}${MM}${YYYY}.json`);
+  ftpClient.get(`${PATH}/ordenes-${DD}${MM}${YYYY}.json`, function(err, stream) {
+    console.log('Archivo buscado.');
 
-      console.log('El stream: ', stream);
-      stream.once('close', function() {
-        ftpClient.end();
-      });
-      stream.pipe(function(response) {
-        console.log('El response: ', response);
-        const pedidosEntregados = response.json();
+    if (err) return console.error('zero results');
 
-        ordersService.updateList(
-          { _id: pedidosEntregados.map(x => x._id) },
-          { estado: 'Entregado' }
-        );
-      });
+    stream.once('close', function() {
+      ftpClient.end();
+    });
+    stream.on('data', function(response) {
+      console.log('El response: ', response);
+      const pedidosEntregados = JSON.stringify(response.toString());
+
+      console.log(pedidosEntregados);
+      const ids =pedidosEntregados.map(x => x._id);
+      if(!ids.length) return console.error('No hay nuevos pedidos entregados.');
+      ordersService.updateList(
+        ids,
+        { estado: 'Entregado' }
+      ).then(()=> stream.close() );
     });
   });
-
-  ftpClient.connect({ host: config.ftpLogistica });
 }
 
 //Upload local file 'foo.txt' to the server:
-function subirPedidosAEntregar() {
-  ftpClient.on('ready', function() {
-    let pedidosPendientes = ordersService.getAll({ estado: 'Pendiente' });
-
-    if (!pedidosPendientes.length)
+function subirPedidosAEntregar(ftpClient) {
+  console.log('Enviando pedidos pendientes...');
+  ordersService.getAll().then(function(pedidosPendientes){
+      if (!pedidosPendientes.length)
       console.log('No hay pedidos pendientes de entregar.');
 
     var buf = Buffer.from(JSON.stringify(pedidosPendientes));
@@ -53,11 +54,10 @@ function subirPedidosAEntregar() {
       MM = hoy.getMonth() + 1,
       YYYY = hoy.getFullYear();
 
-    ftpClient.put(buf, `ordenes-${YYYY}-${MM}-${DD}.json`, function(err) {
-      if (err) throw err;
+    ftpClient.put(buf, `${PATH}/ordenes-${YYYY}-${MM}-${DD}.json`, function(err) {
+      if (err) return console.error('zero results');
       ftpClient.end();
     });
   });
 
-  ftpClient.connect({ host: config.ftpAlmacen });
 }

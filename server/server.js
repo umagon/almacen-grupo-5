@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 const db = require('./config/db');
 const cron = require('node-cron');
 const logisticaService = require('./services/logistica.service');
+const ftp = require('ftp');
 
 const app = express();
 
@@ -27,9 +28,29 @@ app.use('/enviarCompra', require('./controllers/purchasesController'));
 
 
 let upload = false;
+let ftpClient = new ftp();
+
+ftpClient.on('ready', function() {
+
+  if(upload) {
+    logisticaService.obtenerPedidosEntregados(ftpClient);
+  } else {
+    logisticaService.subirPedidosAEntregar(ftpClient);
+  }
+});
+
+
 cron.schedule('*/5 * * * * *', () => {
-  if(upload=!upload) logisticaService.obtenerPedidosEntregados();
-  else logisticaService.subirPedidosAEntregar();
+  try{
+    
+    if(upload=!upload) {
+      ftpClient.connect({ host: config.ftpAlmacen });
+    }else{
+      ftpClient.connect({ host: config.ftpLogistica });
+    }
+  } catch(e){
+    console.error(e);
+  }
 });
 
 
