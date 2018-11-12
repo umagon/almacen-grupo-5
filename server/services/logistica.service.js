@@ -17,49 +17,66 @@ function obtenerPedidosEntregados(ftpClient) {
     MM = hoy.getMonth() + 1,
     YYYY = hoy.getFullYear();
 
-  console.log('Obteniendo pedidos entregados... buscando '+ `${PATH}/delivered-${YYYY}-${MM}-${DD}.json`);
-  ftpClient.get(`${PATH}/delivered-${YYYY}-${MM}-${DD}.json`, function(err, stream) {
+  const path = `${PATH}/delivered-${YYYY}-${MM}-${DD}.json`;
+  console.log('Obteniendo pedidos entregados... buscando '+ path);
+
+  ftpClient.get(path, function(err, stream) {
     if (err) return console.error('zero results');
 
     stream.once('close', function() {
+      
       ftpClient.end();
       console.log('Cierra stream obtener pedidos entregados');
+
     });
     stream.on('data', function(response) {
-      const pedidosEntregados = JSON.parse(response.toString().trim());
+      const nrosOrden = JSON.parse(response.toString().trim());
 
-      console.log(pedidosEntregados);
-      const ids = pedidosEntregados.map(x => x.compra.nro_orden);
+      console.log(nrosOrden);
+      const ids = nrosOrden.map(x => x.orden_id);
       if(!ids.length) return console.error('No hay nuevos pedidos entregados.');
-      ordersService.updateList(
-        ids,
-        'Entregado'
-      );
+
+      ordersService.updateList(ids, 'Entregado');
     });
   });
 }
 
 //Upload local file 'foo.txt' to the server:
 function subirPedidosAEntregar(ftpClient) {
+
   console.log('Enviando pedidos pendientes...');
+
   ordersService.getByStatus('Pendiente').then(function(pedidosPendientes){
-      if (!pedidosPendientes.length)
+    if (!pedidosPendientes.length)
       console.log('No hay pedidos pendientes de entregar.');
 
-    var buf = Buffer.from(JSON.stringify(pedidosPendientes));
+    let ordenes = pedidosPendientes.map(x=> {
+      return {
+        orden_id: x.compra.nro_orden,
+        cliente: x.compra.cliente,
+        peso_total: x.compra.producto.peso * x.compra.producto.cantidad,
+        producto: {
+          id: x.compra.producto.codBarra,
+          nombre: x.compra.producto.nombre
+        }
+      }
+    });
+    
+    var buf = Buffer.from(JSON.stringify(ordenes));
     const hoy = new Date();
     const DD = hoy.getDate(),
       MM = hoy.getMonth() + 1,
       YYYY = hoy.getFullYear();
 
-      console.log(`${PATH}/ordenes-${DD}${MM}${YYYY}.json`);
-    ftpClient.put(buf, `${PATH}/ordenes-${DD}${MM}${YYYY}.json`, function(err) {
+    const path= `/ordenes-${DD}${MM}${YYYY}.json`; //${PATH}
+    console.log(path);
+    ftpClient.put(buf, path, function(err) {
       if (err) return console.error(err);
 
       ftpClient.end();
 
-      const ids = pedidosPendientes.map(x=> { return {nro_orden: x.compra.nro_orden}; });
-      ordersService.updateList(ids, 'Enviado').then(()=>console.log('Pedidos enviados.'));
+      const ids = pedidosPendientes.map(x=> x.compra.nro_orden);
+      ordersService.updateList(ids, 'Enviado');
 
     });
   });
