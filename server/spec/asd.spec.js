@@ -51,6 +51,24 @@ describe('Almacen Test', function() {
     server.close();
   });
 
+  describe('Creacion de usuario de prueba', function() {
+    var data = {};
+    var url = base_url + 'users/register';
+    var params = {
+      url: url,
+      form: userTest
+    };
+    it('Creación de usuario de prueba', done => {
+      request.post(params, (error, response, body) => {
+        data.status = response.statusCode;
+        data.body = body;
+        console.log('Creación de usuario de prueba');
+        expect(data.status).toBe(200);
+        done();
+      });
+    });
+  });
+
   describe('Autenticación de usuario', function() {
     var data = {};
     var url = base_url + 'users/';
@@ -69,7 +87,7 @@ describe('Almacen Test', function() {
       });
     });
     it('Autenticación de usuario.', () => {
-      tokenSession = JSON.parse(data.body).token;
+      //tokenSession = JSON.parse(data.body).token;
       userTest.perfil = JSON.parse(data.body).perfil;
       userTest._id = JSON.parse(data.body)._id;
       console.log('Autenticación de usuario.');
@@ -178,10 +196,7 @@ describe('Almacen Test', function() {
     var url = base_url + 'products';
     var params = {
       url: url,
-      form: productTest,
-      headers: {
-        authorization: 'Bearer ' + tokenSession
-      }
+      form: productTest
     };
     beforeAll(done => {
       request.post(params, (error, response, body) => {
