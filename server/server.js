@@ -32,17 +32,17 @@ let ftpLogistica = new ftp({ host: config.ftpLogistica });
 
 ftpAlmacen.on('ready', function() {
   cron.schedule('10,30,50 * * * * *', () => {
-    logisticaService.obtenerPedidosEntregados(ftpAlmacen, config.ftpAlmacenRuta);
+    logisticaService.obtenerPedidosEntregados(ftpAlmacen, config.ftpAlmacen.path);
   });
 });
 ftpLogistica.on('ready', function() {
   cron.schedule('0,20,40 * * * * *', () => {
-    logisticaService.subirPedidosAEntregar(ftpLogistica, config.ftpLogisticaRuta);
+    logisticaService.subirPedidosAEntregar(ftpLogistica, config.ftpLogistica.path);
   });
 });
 
-ftpAlmacen.connect({ host: config.ftpAlmacen, user: config.ftpLogistica.user, password: config.ftpLogistica.password });
-ftpLogistica.connect({ host: config.ftpLogistica, user: config.ftpLogistica.user, password: config.ftpLogistica.user });
+ftpAlmacen.connect({ host: config.ftpAlmacen.host, user: config.ftpAlmacen.user, password: config.ftpAlmacen.password });
+ftpLogistica.connect({ host: config.ftpLogistica.host, user: config.ftpLogistica.user, password: config.ftpLogistica.password });
 
 
 //var port = process.env.NODE_ENV === 'production' ? 80 : 4000;
