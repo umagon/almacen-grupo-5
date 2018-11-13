@@ -1,30 +1,63 @@
-<br>
+<br />
 <h3>Stock de productos</h3>
-<app-producto *ngIf="productoActual" [(model)]="productoActual" (exito)="nuevo($event)"></app-producto>
-<br><br>
-<img *ngIf="loading>0" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+<app-producto
+  *ngIf="productoActual"
+  [(model)]="productoActual"
+  (exito)="nuevo($event)"
+></app-producto>
+<br /><br />
+<img
+  *ngIf="loading > 0"
+  src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+/>
 <div *ngIf="productos">
-	<p *ngIf="!productos.length">No hay productos</p>
-	<table class="table" *ngIf="productos.length">
-		<tr>
-			<th>Producto</th>
-			<th>Peso</th>
-			<th>Stock</th>
-			<th>Mínimo</th>
-			<th><button type="button" class="btn btn-success" (click)="productoActual = {}">Nuevo</button></th>
-		</tr>
-		<tr *ngFor="let producto of productos">
-			<td [title]="producto.descripcion">{{producto.nombre}}</td>
-			<td>{{producto.peso}}</td>
-			<td [ngClass]="{
-				'text-danger': producto.stock < producto.stockLimite,
-				'text-warning': producto.stock < producto.stockLimite*2
-			}">{{producto.stock}}</td>
-			<td>{{producto.stockLimite}}</td>
-			<td>
-				<button type="button" class="btn btn-default" (click)="productoActual = copy({},producto)">Editar</button>
-				<button type="button" class="btn btn-danger" (click)="borrar(producto._id)">Borrar</button>
-			</td>
-		</tr>
-	</table>
+  <p *ngIf="!productos.length">No hay productos</p>
+  <table class="table" *ngIf="productos.length">
+    <tr>
+      <th>Producto</th>
+      <th>Codigo</th>
+      <th>Peso</th>
+      <th>Stock</th>
+      <th>Mínimo</th>
+      <th>
+        <button
+          type="button"
+          class="btn btn-success"
+          (click)="productoActual = {}"
+        >
+          Nuevo
+        </button>
+      </th>
+    </tr>
+    <tr *ngFor="let producto of productos">
+      <td [title]="producto.descripcion">{{ producto.nombre }}</td>
+      <td>{{ producto.codBarra }}</td>
+      <td>{{ producto.peso }}</td>
+      <td
+        [ngClass]="{
+          'text-danger': producto.stock < producto.stockLimite,
+          'text-warning': producto.stock < producto.stockLimite * 2
+        }"
+      >
+        {{ producto.stock }}
+      </td>
+      <td>{{ producto.stockLimite }}</td>
+      <td>
+        <button
+          type="button"
+          class="btn btn-default"
+          (click)="productoActual = copy({}, producto)"
+        >
+          Editar
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="borrar(producto._id)"
+        >
+          Borrar
+        </button>
+      </td>
+    </tr>
+  </table>
 </div>

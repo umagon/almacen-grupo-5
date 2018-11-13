@@ -19,9 +19,9 @@ function crearPedido(compra) {
   console.log(compra);
   productService
     .updateStock(
-      compra.Producto.codBarra,
-      compra.Producto.cantidad,
-      compra.Cliente.email
+      compra.producto.codBarra,
+      compra.producto.cantidad,
+      compra.cliente.email
     )
     .then(function(peso) {
       pedido.peso_total = peso;

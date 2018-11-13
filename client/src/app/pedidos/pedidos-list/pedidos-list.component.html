@@ -9,7 +9,7 @@
   </tr>
   <tr *ngFor="let pedido of pedidos">
     <td [title]="pedido.compra?.descripcion">{{ pedido.compra?.nro_orden }}</td>
-    <td>{{ pedido.compra?.producto?.nombre }}</td>
+    <td>{{ pedido.compra?.producto?.codBarra }}</td>
     <td>{{ pedido.fechaCompra | date: 'dd/MM/yyyy' }}</td>
     <td>{{ pedido.fechaEntrega | date: 'dd/MM/yyyy' }}</td>
     <td>
